@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 411.4 482.8" width="411.4" height="482.8" role="img" aria-label="XolosaX">
+  <rect width="411.4" height="482.8" fill="#111111"/>
+  <g transform="translate(70,70)">
+    <g transform="translate(20.7,0) scale(0.4492)"><title>XolosaX</title><defs><linearGradient id="lgvd" x1="110" y1="110" x2="402" y2="402" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#D4AF37"/><stop offset="0.55" stop-color="#C89B3C"/><stop offset="1" stop-color="#B8860B"/></linearGradient><mask id="m_lgvd"><rect width="512" height="512" fill="#fff"/><path d="M118.00,118.00 C163.76,259.92 252.08,348.24 394.00,394.00 C348.24,252.08 259.92,163.76 118.00,118.00 Z" fill="#000" stroke="#000" stroke-width="26"/></mask></defs><path d="M394.00,118.00 C252.08,163.76 163.76,252.08 118.00,394.00 C259.92,348.24 348.24,259.92 394.00,118.00 Z" fill="url(#lgvd)" mask="url(#m_lgvd)"/><path d="M118.00,118.00 C163.76,259.92 252.08,348.24 394.00,394.00 C348.24,252.08 259.92,163.76 118.00,118.00 Z" fill="url(#lgvd)"/></g>
+    <g transform="translate(0.0,280.0) scale(0.2415)">
+  <g transform="translate(40,0)" fill="none" stroke="#FFFFFF" stroke-width="21" stroke-linecap="round" stroke-linejoin="round">
+    <g transform="translate(0,0)"><path d="M0,20 L150,220"/><path d="M0,220 L150,20"/></g>
+    <g transform="translate(180,0)"><circle cx="74" cy="146" r="74" fill="none"/></g>
+    <g transform="translate(358,0)"><path d="M0,20 L0,220"/></g>
+    <g transform="translate(388,0)"><circle cx="74" cy="146" r="74" fill="none"/></g>
+    <g transform="translate(566,0)"><path d="M 111.49,97.16 C 111.49,73.48 81.52,72 59.94,72 C 23.98,72 0,92.72 0,112.7 C 0,141.56 28.77,146 59.94,146 C 91.11,146 119.88,150.44 119.88,179.3 C 119.88,199.28 95.9,220 59.94,220 C 38.36,220 8.39,218.52 8.39,194.84" fill="none"/></g>
+    <g transform="translate(715.88,0)"><circle cx="74" cy="146" r="74" fill="none"/><path d="M148,72 L148,220"/></g>
+    <g transform="translate(893.88,0)"><path d="M0,20 L150,220"/><path d="M0,220 L150,20"/></g>
+  </g></g>
+  </g>
+</svg>
