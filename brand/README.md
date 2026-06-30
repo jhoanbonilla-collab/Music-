@@ -13,27 +13,29 @@ gold foil, embossing, and engraving.
 
 ---
 
-## 1. The Symbol — the *Woven X*
+## 1. The Symbol — the *Golden S*
 
-An abstract **X · S monogram**. Two tapered ribbons — drawn with the confidence of a
-conductor's stroke and the flowing bow of a saxophone — cross and **interlace** at the
-centre, one passing over the other.
+An elegant monoline **S** — the saxophone's own S-curve body. Its lower bowl opens into
+an abstracted **bell mouth**, and a row of three key **pearls** runs down the body. The
+mark can stand open, or be enclosed in a fine **diamond seal** whose diagonals and four
+points trace the **X** of XolosaX — turning the monogram into a crest.
+
+This direction is synthesised from four reference logos the founder selected: a minimal
+gold S, a saxophone-as-S with key pearls, an ornate sax-and-S monogram, and a diamond
+emblem. The best of each is distilled into one refined, ownable mark.
 
 The meaning is hidden in the geometry rather than illustrated:
 
 | Read | Meaning |
 |------|---------|
-| The crossing **X** | The brand's name, bookended X…X |
-| The over-under **weave** | Interconnected systems — the fusion of art + technology |
-| The vertical **lens** at the centre | A resonant body / instrument bore |
-| Continuous **point-symmetry** | Circular breathing, harmonic motion, infinity |
-| **Tapered, pointed** terminals | Precision and craft; emboss and engrave cleanly |
-
-It is never a literal saxophone. It is a mark of resonance.
+| The **S** | The saxophone's S-curve; the heart of *XoloSaX* |
+| The **bell** + three **pearls** | Saxophone craft — a cue, never a literal horn |
+| The **diamond seal** & its four points | The **X…X** bookends; a crest / stamp of quality |
+| Slim **monoline**, gold gradient | Lacquered brass, Swiss restraint, premium calm |
 
 <p>
-  <img src="symbol/xolosax-symbol-gold.svg" width="120">
-  <img src="symbol/xolosax-symbol-black.svg" width="120">
+  <img src="symbol/xolosax-symbol-gold.svg" width="120" style="background:#111">
+  <img src="symbol/xolosax-seal-gold.svg" width="120" style="background:#0F172A">
   <img src="symbol/xolosax-symbol-white.svg" width="120" style="background:#111">
 </p>
 
@@ -41,14 +43,16 @@ It is never a literal saxophone. It is a mark of resonance.
 
 | File | Use |
 |------|-----|
-| `xolosax-symbol-gold.svg` | Primary — champagne→brass gradient |
-| `xolosax-symbol-gold-flat.svg` | Single-colour gold (print / spot) |
-| `xolosax-symbol-black.svg` | Black on light backgrounds |
-| `xolosax-symbol-white.svg` | Reversed / knockout on dark or foil |
-| `xolosax-symbol-*-solid.svg` | Un-woven solid form for very small sizes & deep engraving |
+| `xolosax-symbol-gold.svg` | Primary open S — champagne→brass gradient |
+| `xolosax-symbol-gold-flat.svg` | Single-colour gold open S (print / spot) |
+| `xolosax-symbol-black.svg` / `-white.svg` | Mono open S for light / dark & knockout |
+| `xolosax-seal-gold.svg` | Diamond **seal** (crest) — gradient |
+| `xolosax-seal-black.svg` / `seal-white.svg` | Mono seal for stamps, foil, engraving |
+| `xolosax-symbol-*-mini.svg` | Pearl-less, heavier S for very small sizes & deep engraving |
 
-> **Small-size rule:** below ~24 px use the **solid** variant (the interlace gap closes
-> cleanly into a single confident mark). The favicon already uses it.
+> **Small-size rule:** below ~24 px use the **mini** variant (pearls dropped, stroke
+> heavier) so the S stays crisp. The favicon already uses it. Reserve the detailed **seal**
+> for sizes above ~48 px.
 
 ---
 
@@ -140,7 +144,7 @@ npm i playwright-core
 node export.mjs        # writes png/ rasters + banner
 ```
 
-- `symbol.mjs` — the Woven X geometry (`symbol({color, gradient, interlace, w, gap})`)
+- `symbol.mjs` — the Golden S geometry (`symbol({color, gradient, frame, pearls, bell, sw})`)
 - `wordmark.mjs` — the geometric letterforms (`wordmark({color, track})`)
 - `build.mjs` — emits the full file set · `render.mjs` / `export.mjs` — preview & raster
 

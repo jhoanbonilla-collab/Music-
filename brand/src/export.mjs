@@ -7,6 +7,7 @@ const jobs = [
   ['symbol/xolosax-symbol-gold.svg',  'png/xolosax-symbol-gold-1024.png',  1024, true],
   ['symbol/xolosax-symbol-black.svg', 'png/xolosax-symbol-black-1024.png', 1024, true],
   ['symbol/xolosax-symbol-white.svg', 'png/xolosax-symbol-white-1024.png', 1024, true],
+  ['symbol/xolosax-seal-gold.svg',    'png/xolosax-seal-gold-1024.png',    1024, true],
   ['app-icon/xolosax-app-icon.svg',   'png/xolosax-app-icon-1024.png',     1024, false],
   ['favicon/xolosax-favicon.svg',     'png/xolosax-favicon-180.png',        180, false],
   ['favicon/xolosax-favicon.svg',     'png/xolosax-favicon-32.png',          32, false],
@@ -32,11 +33,11 @@ for (const [src, out, size, transparent, isWide] of jobs) {
 }
 // README banner: vertical lockup on dark, padded
 {
-  const svg = readFileSync(base + 'lockup/xolosax-lockup-vertical-gold-on-dark.svg', 'utf8');
+  const svg = readFileSync(base + 'lockup/xolosax-lockup-vertical-reversed.svg', 'utf8');
   const enc = encodeURIComponent(svg);
   await page.setViewportSize({ width: 1200, height: 630 });
-  await page.setContent(`<body style="margin:0;background:radial-gradient(120% 90% at 50% 8%,#1b1814,#111111 55%);display:flex;align-items:center;justify-content:center;height:630px">
-    <img src="data:image/svg+xml,${enc}" style="height:440px">
+  await page.setContent(`<body style="margin:0;background:radial-gradient(120% 90% at 50% 6%,#1c1812,#0d0d0e 58%);display:flex;align-items:center;justify-content:center;height:630px">
+    <img src="data:image/svg+xml,${enc}" style="height:430px">
     </body>`, { waitUntil: 'networkidle' });
   await page.screenshot({ path: base + 'png/xolosax-banner.png' });
   console.log('png banner 1200x630');

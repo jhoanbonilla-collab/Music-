@@ -9,13 +9,18 @@ const svgWidth = s => parseFloat(s.match(/width="([\d.]+)"/)[1]);
 const svgHeight = s => parseFloat(s.match(/height="([\d.]+)"/)[1]);
 
 /* ---------- SYMBOL VARIANTS ---------- */
-W('symbol/xolosax-symbol-gold.svg',       symbol({ gradient: true,  interlace: true }));
-W('symbol/xolosax-symbol-gold-flat.svg',  symbol({ color: '#C89B3C', interlace: true }));
-W('symbol/xolosax-symbol-black.svg',      symbol({ color: '#111111', interlace: true }));
-W('symbol/xolosax-symbol-white.svg',      symbol({ color: '#FFFFFF', interlace: true }));
-// solid (unwoven) — maximal legibility for tiny sizes / engraving
-W('symbol/xolosax-symbol-gold-solid.svg', symbol({ color: '#C89B3C', interlace: false }));
-W('symbol/xolosax-symbol-black-solid.svg',symbol({ color: '#111111', interlace: false }));
+// Core mark = frameless Golden S (bell + key pearls)
+W('symbol/xolosax-symbol-gold.svg',       symbol({ gradient: true }));
+W('symbol/xolosax-symbol-gold-flat.svg',  symbol({ color: '#C89B3C' }));
+W('symbol/xolosax-symbol-black.svg',      symbol({ color: '#111111' }));
+W('symbol/xolosax-symbol-white.svg',      symbol({ color: '#FFFFFF' }));
+// Seal = S enclosed in the diamond X (premium / crest / badge applications)
+W('symbol/xolosax-seal-gold.svg',         symbol({ gradient: true, frame: true }));
+W('symbol/xolosax-seal-black.svg',        symbol({ color: '#111111', frame: true }));
+W('symbol/xolosax-seal-white.svg',        symbol({ color: '#FFFFFF', frame: true }));
+// Mini = no pearls, heavier stroke — for very small sizes / engraving
+W('symbol/xolosax-symbol-gold-mini.svg',  symbol({ color: '#C89B3C', pearls: false, sw: 30 }));
+W('symbol/xolosax-symbol-black-mini.svg', symbol({ color: '#111111', pearls: false, sw: 30 }));
 
 /* ---------- WORDMARK VARIANTS ---------- */
 W('wordmark/xolosax-wordmark-black.svg', wordmark({ color: '#111111' }));
@@ -82,10 +87,14 @@ W('lockup/xolosax-lockup-vertical-reversed.svg',        lockupV({ gradient: true
 W('lockup/xolosax-lockup-vertical-mono-white.svg',      lockupV({ symColor: '#FFFFFF', wordColor: '#FFFFFF', bg: null, id: 'ew' }));
 
 /* ---------- APP ICON ---------- */
+// place the 512 symbol box into a tile, filling `frac` of the tile, centred
+function placed(si, tile, frac) {
+  const scale = tile * frac / 512, off = tile * (1 - frac) / 2;
+  return `<g transform="translate(${off.toFixed(2)},${off.toFixed(2)}) scale(${scale.toFixed(4)})">${si.content}</g>`;
+}
 function appIcon() {
-  const si = inner(symbol({ gradient: true, interlace: true, id: 'app' }));
+  const si = inner(symbol({ gradient: true, id: 'app' }));
   const s = 1024, r = 224; // iOS-ish corner radius
-  const scale = 0.62, sz = 512 * scale, off = (s - sz) / 2;
   return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${s} ${s}" width="${s}" height="${s}">
   <defs>
     <linearGradient id="bgv" x1="0" y1="0" x2="0" y2="${s}" gradientUnits="userSpaceOnUse">
@@ -93,18 +102,18 @@ function appIcon() {
     </linearGradient>
   </defs>
   <rect width="${s}" height="${s}" rx="${r}" ry="${r}" fill="url(#bgv)"/>
-  <g transform="translate(${off.toFixed(1)},${off.toFixed(1)}) scale(${scale})">${si.content}</g>
+  ${placed(si, s, 0.92)}
 </svg>`;
 }
 W('app-icon/xolosax-app-icon.svg', appIcon());
 
 /* ---------- FAVICON ---------- */
 function favicon() {
-  const si = inner(symbol({ color: '#C89B3C', interlace: false, id: 'fav' })); // solid for tiny legibility
-  const s = 64, r = 14, scale = 0.74, sz = 512 * scale, off = (s - sz) / 2;
+  const si = inner(symbol({ color: '#C89B3C', pearls: false, sw: 30, id: 'fav' })); // mini for tiny legibility
+  const s = 64, r = 14;
   return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${s} ${s}" width="${s}" height="${s}">
   <rect width="${s}" height="${s}" rx="${r}" ry="${r}" fill="#111111"/>
-  <g transform="translate(${off.toFixed(2)},${off.toFixed(2)}) scale(${(scale * s / 512).toFixed(4)})">${si.content}</g>
+  ${placed(si, s, 1.0)}
 </svg>`;
 }
 W('favicon/xolosax-favicon.svg', favicon());
