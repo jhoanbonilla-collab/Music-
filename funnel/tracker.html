@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>XolosaX — Booking Pipeline</title>
+<style>
+  :root{
+    --bg:#0e0e0f; --panel:#161618; --panel2:#1d1d20; --line:#2a2a2e;
+    --ink:#f3efe6; --muted:#8a867d;
+    --gold:#C89B3C; --gold-hi:#E7C964; --gold-lo:#9D7320;
+    --ok:#7fb069; --warn:#e0a458; --bad:#c05746;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--ink);
+    font:14px/1.5 "Helvetica Neue",Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+
+  header{display:flex;align-items:center;gap:14px;padding:18px 22px;border-bottom:1px solid var(--line)}
+  header svg{width:34px;height:34px;flex:none}
+  header h1{font-weight:300;font-size:17px;letter-spacing:.3em;text-transform:uppercase}
+  header h1 b{font-weight:300;background:linear-gradient(135deg,var(--gold-hi),var(--gold),var(--gold-lo));
+    -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+  header .sub{color:var(--muted);font-size:12px;letter-spacing:.14em;text-transform:uppercase}
+  header .actions{margin-left:auto;display:flex;gap:8px}
+  .btn{background:var(--panel2);border:1px solid var(--line);color:var(--ink);border-radius:8px;
+    padding:8px 14px;cursor:pointer;font:inherit;font-size:13px}
+  .btn:hover{border-color:var(--gold)}
+  .btn.gold{background:linear-gradient(135deg,var(--gold-hi),var(--gold) 55%,var(--gold-lo));
+    color:#0e0e0f;border:0;font-weight:600}
+
+  #stats{display:flex;gap:10px;flex-wrap:wrap;padding:14px 22px}
+  .stat{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:10px 16px;min-width:130px}
+  .stat .v{font-size:19px;color:var(--gold-hi)}
+  .stat .k{font-size:11px;color:var(--muted);letter-spacing:.12em;text-transform:uppercase}
+
+  #board{display:flex;gap:12px;overflow-x:auto;padding:6px 22px 40px;align-items:flex-start}
+  .col{flex:0 0 240px;background:var(--panel);border:1px solid var(--line);border-radius:12px}
+  .col h2{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);
+    padding:11px 12px 9px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between}
+  .col h2 .n{color:var(--muted)}
+  .col.lost h2{color:var(--muted)}
+  .cards{padding:8px;display:flex;flex-direction:column;gap:8px;min-height:30px}
+
+  .card{background:var(--panel2);border:1px solid var(--line);border-radius:10px;padding:10px 11px;cursor:pointer}
+  .card:hover{border-color:var(--gold)}
+  .card .name{font-size:14px;font-weight:600}
+  .card .meta{color:var(--muted);font-size:12px;margin-top:2px}
+  .card .tier{display:inline-block;font-size:10px;letter-spacing:.1em;color:var(--gold-hi);
+    border:1px solid var(--gold-lo);border-radius:4px;padding:1px 6px;margin-top:6px}
+  .card .fee{float:right;color:var(--gold-hi);font-size:13px;margin-top:5px}
+  .card .action{margin-top:8px;font-size:11.5px;padding:5px 8px;border-radius:6px;
+    background:rgba(200,155,60,.09);color:var(--gold-hi);clear:both}
+  .card .action.warn{background:rgba(224,164,88,.13);color:var(--warn)}
+  .card .action.bad{background:rgba(192,87,70,.15);color:#e28374}
+  .card .action.ok{background:rgba(127,176,105,.12);color:var(--ok)}
+  .card .nav{display:flex;gap:6px;margin-top:8px}
+  .card .nav button{flex:1;background:transparent;border:1px solid var(--line);color:var(--muted);
+    border-radius:6px;padding:3px 0;cursor:pointer;font-size:12px}
+  .card .nav button:hover{border-color:var(--gold);color:var(--gold-hi)}
+
+  dialog{background:var(--panel);color:var(--ink);border:1px solid var(--gold-lo);border-radius:14px;
+    padding:26px;width:min(560px,94vw);margin:auto}
+  dialog::backdrop{background:rgba(0,0,0,.65)}
+  dialog h3{font-weight:300;letter-spacing:.2em;text-transform:uppercase;font-size:15px;
+    color:var(--gold);margin-bottom:18px}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  @media(max-width:520px){.grid{grid-template-columns:1fr}}
+  .f{display:flex;flex-direction:column;gap:4px}
+  .f.full{grid-column:1/-1}
+  .f label{font-size:11px;color:var(--muted);letter-spacing:.1em;text-transform:uppercase}
+  .f input,.f select,.f textarea{background:var(--panel2);border:1px solid var(--line);border-radius:7px;
+    color:var(--ink);padding:9px 11px;font:inherit;font-size:14px}
+  .f input:focus,.f select:focus,.f textarea:focus{outline:none;border-color:var(--gold)}
+  dialog .foot{display:flex;gap:8px;margin-top:20px}
+  dialog .foot .spacer{flex:1}
+  .btn.danger{color:#e28374;border-color:#5a2f28}
+  .hint{grid-column:1/-1;font-size:12px;color:var(--muted)}
+</style>
+</head>
+<body>
+
+<header>
+  <svg viewBox="0 0 512 512" aria-hidden="true"><defs><linearGradient id="g" x1="120" y1="90" x2="380" y2="430" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#E7C964"/><stop offset="0.5" stop-color="#C89B3C"/><stop offset="1" stop-color="#9D7320"/></linearGradient></defs><path d="M256,52 L460,256 L256,460 L52,256 Z" fill="none" stroke="url(#g)" stroke-width="14"/><g transform="translate(35.19,-6)"><path d="M340,158 C340,120 302,102 256,102 C204,102 168,132 168,178 C168,222 204,242 252,255 C302,268 340,288 340,334 C340,392 300,422 250,422 C214,422 186,406 180,374" fill="none" stroke="url(#g)" stroke-width="30" stroke-linecap="round"/></g></svg>
+  <div>
+    <h1><b>Xolosa</b>X</h1>
+    <div class="sub">Booking pipeline</div>
+  </div>
+  <div class="actions">
+    <button class="btn" id="exportBtn">Export CSV</button>
+    <button class="btn gold" id="addBtn">+ New inquiry</button>
+  </div>
+</header>
+
+<div id="stats"></div>
+<div id="board"></div>
+
+<dialog id="modal">
+  <h3 id="modalTitle">New inquiry</h3>
+  <form id="gigForm" method="dialog">
+    <div class="grid">
+      <div class="f"><label>Client *</label><input name="client" required></div>
+      <div class="f"><label>Contact (email / phone)</label><input name="contact"></div>
+      <div class="f"><label>Source</label>
+        <select name="source"><option>Site form</option><option>Instagram / TikTok</option>
+        <option>Referral</option><option>Venue</option><option>Saw live</option><option>Other</option></select></div>
+      <div class="f"><label>Event type</label>
+        <select name="eventType"><option>Wedding</option><option>Private party</option>
+        <option>Corporate</option><option>Club / venue</option><option>Brand event</option><option>Other</option></select></div>
+      <div class="f"><label>Event date</label><input name="eventDate" type="date"></div>
+      <div class="f"><label>City / venue</label><input name="venue"></div>
+      <div class="f"><label>Tier</label>
+        <select name="tier"><option value="">—</option><option>I — Solo</option>
+        <option>II — Sax × DJ</option><option>III — Signature</option></select></div>
+      <div class="f"><label>Fee (quoted)</label><input name="fee" type="number" min="0" step="50"></div>
+      <div class="f"><label>Stage</label><select name="stage"></select></div>
+      <div class="f"><label>Hold expires</label><input name="holdExpiry" type="datetime-local"></div>
+      <div class="f full"><label>Lost reason (only if Lost)</label>
+        <select name="lostReason"><option value="">—</option><option>Date unavailable</option>
+        <option>Price</option><option>Ghosted / unresponsive</option><option>Hold expired</option>
+        <option>Chose another act</option><option>Event cancelled</option></select></div>
+      <div class="f full"><label>Notes</label><textarea name="notes" rows="2"></textarea></div>
+      <div class="hint">Moving a card to <b>Date Hold</b> auto-sets the hold to now + 48 hrs if empty.</div>
+    </div>
+    <div class="foot">
+      <button type="button" class="btn danger" id="deleteBtn" style="display:none">Delete</button>
+      <span class="spacer"></span>
+      <button type="button" class="btn" id="cancelBtn">Cancel</button>
+      <button type="submit" class="btn gold">Save</button>
+    </div>
+  </form>
+</dialog>
+
+<script>
+const STAGES = [
+  {k:'inquiry',  label:'New Inquiry'},
+  {k:'qualified',label:'Qualified'},
+  {k:'quote',    label:'Quote Sent'},
+  {k:'hold',     label:'Date Hold'},
+  {k:'contract', label:'Contract Sent'},
+  {k:'confirmed',label:'Confirmed'},
+  {k:'pregig',   label:'Pre-Gig'},
+  {k:'done',     label:'Completed'},
+  {k:'lost',     label:'Lost'},
+];
+const KEY = 'xolosax-pipeline';
+const DAY = 864e5;
+let gigs = JSON.parse(localStorage.getItem(KEY) || '[]');
+let editingId = null;
+
+const save = () => { localStorage.setItem(KEY, JSON.stringify(gigs)); render(); };
+const fmtDate = d => d ? new Date(d + (d.length===10?'T12:00':'')).toLocaleDateString(undefined,{month:'short',day:'numeric',year:'numeric'}) : '';
+const money = n => n ? '$' + Number(n).toLocaleString() : '';
+const daysUntil = d => Math.ceil((new Date(d+(d.length===10?'T12:00':'')) - Date.now())/DAY);
+
+// Next action per stage — the funnel's SLAs, computed live.
+function nextAction(g){
+  const inStage = (Date.now() - (g.stageAt||g.created)) / DAY;
+  switch(g.stage){
+    case 'inquiry':  return {t: inStage>1 ? '⚠ Reply overdue (SLA 24h) — qualify now' : 'Triage & qualify — reply within 24h', c: inStage>1?'warn':''};
+    case 'qualified':return {t: inStage>1 ? '⚠ Quote overdue (SLA 24h) — send it' : 'Send tier quote (templates/03)', c: inStage>1?'warn':''};
+    case 'quote':    return {t: inStage>=3 ? 'Follow up — quote sent '+Math.floor(inStage)+'d ago' : 'Awaiting reply — HOLD or BOOK', c: inStage>=3?'warn':''};
+    case 'hold': {
+      if(!g.holdExpiry) return {t:'Set the 48-hr hold expiry', c:'warn'};
+      const hrs = (new Date(g.holdExpiry) - Date.now())/36e5;
+      if(hrs <= 0) return {t:'⏰ Hold EXPIRED — release date (templates/04-C)', c:'bad'};
+      if(hrs <= 24) return {t:'⏳ '+Math.floor(hrs)+'h left — send reminder (04-B)', c:'warn'};
+      return {t:'Held — expires in '+Math.floor(hrs)+'h', c:''};
+    }
+    case 'contract': return {t: inStage>=3 ? 'Chase signature + deposit (05 nudge)' : 'Awaiting signature + 30% deposit', c: inStage>=3?'warn':''};
+    case 'confirmed': {
+      if(g.eventDate){ const d = daysUntil(g.eventDate);
+        if(d<=7) return {t:'📋 Send logistics email NOW (templates/07)', c:'warn'};
+        return {t:'Logistics email in '+(d-7)+'d (E−7)', c:'ok'}; }
+      return {t:'Confirmed — set event date', c:'ok'};
+    }
+    case 'pregig': {
+      if(g.eventDate){ const d = daysUntil(g.eventDate);
+        if(d<0) return {t:'Gig done → move to Completed', c:'warn'};
+        if(d<=1) return {t:'📱 Send day-of message (templates/08)', c:'warn'};
+        return {t:'Event in '+d+'d — day-of msg at E−1', c:'ok'}; }
+      return {t:'Pre-gig — set event date', c:''};
+    }
+    case 'done': {
+      const d = g.eventDate ? -daysUntil(g.eventDate) : inStage;
+      return d<=2 ? {t:'🌟 Send thank-you + review ask (09)', c:'warn'}
+                  : {t:'Done — log review & referral', c:'ok'};
+    }
+    case 'lost': return {t: g.lostReason ? 'Lost — '+g.lostReason : 'Lost', c:'bad'};
+  }
+}
+
+function move(id, dir){
+  const g = gigs.find(x=>x.id===id); if(!g) return;
+  const order = STAGES.filter(s=>s.k!=='lost').map(s=>s.k);
+  const i = order.indexOf(g.stage);
+  if(g.stage==='lost'){ if(dir>0){ g.stage='inquiry'; g.stageAt=Date.now(); save(); } return; }
+  const ni = i + dir;
+  if(ni<0 || ni>=order.length) return;
+  g.stage = order[ni]; g.stageAt = Date.now();
+  if(g.stage==='hold' && !g.holdExpiry)
+    g.holdExpiry = new Date(Date.now()+48*36e5).toISOString().slice(0,16);
+  save();
+}
+
+function render(){
+  const board = document.getElementById('board');
+  board.innerHTML = '';
+  for(const s of STAGES){
+    const items = gigs.filter(g=>g.stage===s.k)
+      .sort((a,b)=>(a.eventDate||'9999').localeCompare(b.eventDate||'9999'));
+    const col = document.createElement('div');
+    col.className = 'col' + (s.k==='lost'?' lost':'');
+    col.innerHTML = `<h2>${s.label}<span class="n">${items.length}</span></h2>`;
+    const wrap = document.createElement('div'); wrap.className='cards';
+    for(const g of items){
+      const a = nextAction(g);
+      const card = document.createElement('div'); card.className='card';
+      card.innerHTML =
+        `<span class="fee">${money(g.fee)}</span><div class="name"></div>
+         <div class="meta">${g.eventType||''}${g.eventDate?' · '+fmtDate(g.eventDate):''}${g.venue?' · '+g.venue.replace(/</g,'&lt;'):''}</div>
+         ${g.tier?`<span class="tier">${g.tier}</span>`:''}
+         <div class="action ${a.c}">${a.t}</div>
+         <div class="nav"><button data-d="-1">◀</button><button data-d="1">▶</button></div>`;
+      card.querySelector('.name').textContent = g.client;
+      card.addEventListener('click', e=>{
+        const b = e.target.closest('button');
+        if(b){ move(g.id, +b.dataset.d); e.stopPropagation(); return; }
+        openModal(g.id);
+      });
+      wrap.appendChild(card);
+    }
+    col.appendChild(wrap); board.appendChild(col);
+  }
+  renderStats();
+}
+
+function renderStats(){
+  const active = gigs.filter(g=>['inquiry','qualified','quote','hold','contract'].includes(g.stage));
+  const booked = gigs.filter(g=>['confirmed','pregig','done'].includes(g.stage));
+  const lost = gigs.filter(g=>g.stage==='lost');
+  const sum = a => a.reduce((t,g)=>t+(+g.fee||0),0);
+  const win = booked.length+lost.length ? Math.round(100*booked.length/(booked.length+lost.length)) : '—';
+  document.getElementById('stats').innerHTML = [
+    [active.length,'Active inquiries'], [money(sum(active))||'$0','Pipeline value'],
+    [booked.length,'Booked gigs'], [money(sum(booked))||'$0','Booked value'],
+    [win+(win==='—'?'':'%'),'Win rate'],
+  ].map(([v,k])=>`<div class="stat"><div class="v">${v}</div><div class="k">${k}</div></div>`).join('');
+}
+
+// ── modal ──
+const modal = document.getElementById('modal');
+const form = document.getElementById('gigForm');
+form.elements.stage.innerHTML = STAGES.map(s=>`<option value="${s.k}">${s.label}</option>`).join('');
+
+function openModal(id){
+  editingId = id;
+  form.reset();
+  document.getElementById('modalTitle').textContent = id ? 'Edit booking' : 'New inquiry';
+  document.getElementById('deleteBtn').style.display = id ? '' : 'none';
+  if(id){
+    const g = gigs.find(x=>x.id===id);
+    for(const f of ['client','contact','source','eventType','eventDate','venue','tier','fee','stage','holdExpiry','lostReason','notes'])
+      if(g[f]!=null) form.elements[f].value = g[f];
+  }
+  modal.showModal();
+}
+
+form.addEventListener('submit', ()=>{
+  const d = Object.fromEntries(new FormData(form).entries());
+  if(!d.client) return;
+  if(editingId){
+    const g = gigs.find(x=>x.id===editingId);
+    const stageChanged = g.stage !== d.stage;
+    Object.assign(g, d);
+    if(stageChanged) g.stageAt = Date.now();
+  } else {
+    gigs.push({...d, id:crypto.randomUUID(), created:Date.now(), stageAt:Date.now()});
+  }
+  save();
+});
+document.getElementById('cancelBtn').onclick = ()=>modal.close();
+document.getElementById('deleteBtn').onclick = ()=>{
+  if(confirm('Delete this booking permanently?')){
+    gigs = gigs.filter(x=>x.id!==editingId); save(); modal.close();
+  }
+};
+document.getElementById('addBtn').onclick = ()=>openModal(null);
+
+// ── CSV export ──
+document.getElementById('exportBtn').onclick = ()=>{
+  const cols = ['client','contact','source','eventType','eventDate','venue','tier','fee','stage','holdExpiry','lostReason','notes'];
+  const esc = v => '"' + String(v??'').replace(/"/g,'""') + '"';
+  const csv = [cols.join(',')].concat(
+    gigs.map(g=>cols.map(c=>esc(c==='stage' ? (STAGES.find(s=>s.k===g.stage)?.label||g.stage) : g[c])).join(','))
+  ).join('\n');
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob([csv],{type:'text/csv'}));
+  a.download = 'xolosax-pipeline.csv'; a.click(); URL.revokeObjectURL(a.href);
+};
+
+// refresh countdowns every minute
+setInterval(render, 60000);
+render();
+</script>
+</body>
+</html>
