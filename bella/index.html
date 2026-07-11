@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Bella — Belleza &amp; Boutique</title>
-<meta name="description" content="Bella: boutique de belleza y cuidado personal. Descubre nuestra tienda digital.">
+<title>Bella | Moda y Belleza Femenina — Vestidos, Fajas y Accesorios</title>
+<meta name="description" content="Descubre Bella: vestidos, jeans, fajas moldeadoras, bisutería y más. Calidad premium a precios accesibles y envíos a todo el país. Siéntete Bella.">
 <link rel="icon" href="assets/bella-monogram.svg" type="image/svg+xml">
 <style>
   :root{
@@ -23,7 +23,6 @@
   *{margin:0;padding:0;box-sizing:border-box}
   html{scroll-behavior:smooth}
   body{font-family:Georgia,'Times New Roman',serif;background:var(--crema);color:var(--tinta);line-height:1.6}
-  .sans{font-family:Verdana,Geneva,sans-serif}
   img,svg{max-width:100%;display:block}
   a{color:inherit;text-decoration:none}
   .contenedor{max-width:1100px;margin:0 auto;padding:0 22px}
@@ -34,8 +33,8 @@
   .marca{display:flex;align-items:center;gap:12px}
   .marca .mono{width:44px;height:44px}
   .marca .nombre{font-size:1.5rem;letter-spacing:.35em;color:var(--berenjena)}
-  nav{display:flex;gap:26px;align-items:center}
-  nav a{font-family:Verdana,Geneva,sans-serif;font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;color:var(--gris);transition:color .2s}
+  nav{display:flex;gap:22px;align-items:center}
+  nav a{font-family:Verdana,Geneva,sans-serif;font-size:.75rem;letter-spacing:.12em;text-transform:uppercase;color:var(--gris);transition:color .2s}
   nav a:hover{color:var(--rosa)}
   .btn-carrito{position:relative;background:var(--berenjena);color:#fff;border:none;border-radius:999px;padding:10px 18px;font-family:Verdana,Geneva,sans-serif;font-size:.78rem;letter-spacing:.08em;cursor:pointer;transition:transform .15s}
   .btn-carrito:hover{transform:translateY(-1px)}
@@ -44,21 +43,33 @@
   /* ---------- Hero ---------- */
   .hero{background:linear-gradient(135deg,var(--berenjena-2),#241226);color:var(--crema);overflow:hidden}
   .hero-int{display:grid;grid-template-columns:1.15fr .85fr;gap:40px;align-items:center;padding:80px 22px;max-width:1100px;margin:0 auto}
-  .hero h1{font-size:clamp(2.4rem,5.5vw,4rem);font-weight:normal;line-height:1.12;margin:18px 0}
+  .hero h1{font-size:clamp(2.3rem,5.2vw,3.8rem);font-weight:normal;line-height:1.12;margin:18px 0}
   .hero h1 em{font-style:italic;background:var(--bloom);-webkit-background-clip:text;background-clip:text;color:transparent}
-  .hero .eyebrow{font-family:Verdana,Geneva,sans-serif;font-size:.72rem;letter-spacing:.35em;text-transform:uppercase;color:var(--dorado)}
-  .hero p.sub{color:#D8C6D6;max-width:46ch;margin-bottom:30px}
-  .cta{display:inline-block;background:var(--bloom);color:#fff;padding:14px 32px;border-radius:999px;font-family:Verdana,Geneva,sans-serif;font-size:.82rem;letter-spacing:.12em;text-transform:uppercase;box-shadow:var(--sombra);transition:transform .15s}
+  .eyebrow{font-family:Verdana,Geneva,sans-serif;font-size:.72rem;letter-spacing:.35em;text-transform:uppercase;color:var(--dorado)}
+  .hero p.sub{color:#D8C6D6;max-width:48ch;margin-bottom:30px}
+  .cta{display:inline-block;background:var(--bloom);color:#fff;padding:14px 32px;border-radius:999px;font-family:Verdana,Geneva,sans-serif;font-size:.82rem;letter-spacing:.12em;text-transform:uppercase;box-shadow:var(--sombra);transition:transform .15s;border:none;cursor:pointer}
   .cta:hover{transform:translateY(-2px)}
   .cta.secundario{background:transparent;border:1px solid rgba(250,245,239,.35);box-shadow:none;margin-left:12px}
   .hero-logo{display:flex;justify-content:center}
-  .hero-logo svg,.hero-logo img{width:min(300px,70vw);filter:drop-shadow(0 24px 48px rgba(0,0,0,.45))}
+  .hero-logo img{width:min(300px,70vw);filter:drop-shadow(0 24px 48px rgba(0,0,0,.45))}
+  .hero-beneficios{background:rgba(0,0,0,.22);border-top:1px solid rgba(255,255,255,.08)}
+  .hero-beneficios .contenedor{display:flex;flex-wrap:wrap;justify-content:space-between;gap:14px;padding:16px 22px;font-family:Verdana,Geneva,sans-serif;font-size:.75rem;letter-spacing:.06em;color:#E8D9E6}
 
   /* ---------- Secciones ---------- */
   section{padding:76px 0}
   .titulo-seccion{text-align:center;margin-bottom:46px}
-  .titulo-seccion .eyebrow{font-family:Verdana,Geneva,sans-serif;font-size:.72rem;letter-spacing:.35em;text-transform:uppercase;color:var(--rosa)}
+  .titulo-seccion .eyebrow{color:var(--rosa)}
   .titulo-seccion h2{font-size:2.2rem;font-weight:normal;color:var(--berenjena);margin-top:8px}
+  .titulo-seccion p.baja{font-family:Verdana,Geneva,sans-serif;font-size:.85rem;color:var(--gris);max-width:60ch;margin:10px auto 0}
+
+  /* ---------- Categorías ---------- */
+  .categorias{background:var(--crema-2)}
+  .rejilla-cat{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:18px}
+  .cat{background:#fff;border-radius:16px;padding:22px;box-shadow:0 4px 14px rgba(46,24,48,.06);transition:transform .2s}
+  .cat:hover{transform:translateY(-4px)}
+  .cat .emoji{font-size:1.9rem}
+  .cat h3{font-size:1.05rem;font-weight:normal;color:var(--berenjena);margin:8px 0 4px}
+  .cat p{font-family:Verdana,Geneva,sans-serif;font-size:.78rem;color:var(--gris)}
 
   /* ---------- Tienda ---------- */
   .rejilla{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:26px}
@@ -66,7 +77,7 @@
   .tarjeta:hover{transform:translateY(-5px);box-shadow:var(--sombra)}
   .tarjeta .visual{height:170px;display:flex;align-items:center;justify-content:center;font-size:4rem}
   .tarjeta .info{padding:20px 22px 24px;display:flex;flex-direction:column;gap:8px;flex:1}
-  .tarjeta h3{font-size:1.15rem;font-weight:normal;color:var(--berenjena)}
+  .tarjeta h3{font-size:1.12rem;font-weight:normal;color:var(--berenjena)}
   .tarjeta .desc{font-family:Verdana,Geneva,sans-serif;font-size:.78rem;color:var(--gris);flex:1}
   .tarjeta .pie{display:flex;align-items:center;justify-content:space-between;margin-top:10px}
   .precio{font-size:1.2rem;color:var(--berenjena)}
@@ -74,15 +85,38 @@
   .btn-add:hover{background:var(--rosa)}
 
   /* ---------- Nosotros ---------- */
-  .nosotros{background:var(--crema-2)}
+  .nosotros{background:var(--berenjena);color:#E8D9E6}
+  .nosotros .titulo-seccion h2{color:#fff}
   .nosotros-int{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center}
   .nosotros p{margin-bottom:14px}
-  .valores{display:grid;gap:16px}
-  .valor{background:#fff;border-radius:14px;padding:18px 22px;box-shadow:0 4px 14px rgba(46,24,48,.06)}
-  .valor strong{color:var(--berenjena)}
-  .valor span{display:block;font-family:Verdana,Geneva,sans-serif;font-size:.78rem;color:var(--gris);margin-top:4px}
+  .nosotros em{background:var(--bloom);-webkit-background-clip:text;background-clip:text;color:transparent;font-style:italic}
 
-  /* ---------- Footer ---------- */
+  /* ---------- Por qué Bella ---------- */
+  .porque .rejilla-cat{grid-template-columns:repeat(auto-fill,minmax(280px,1fr))}
+  .porque .cat h3{display:flex;align-items:center;gap:8px}
+
+  /* ---------- Testimonios ---------- */
+  .testimonios{background:var(--crema-2)}
+  .rejilla-testi{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:22px}
+  .testi{background:#fff;border-radius:16px;padding:26px;box-shadow:0 4px 14px rgba(46,24,48,.06);display:flex;flex-direction:column;gap:12px}
+  .testi .estrellas{color:var(--dorado);letter-spacing:3px}
+  .testi p{font-size:.98rem}
+  .testi .quien{font-family:Verdana,Geneva,sans-serif;font-size:.75rem;color:var(--gris)}
+
+  /* ---------- FAQ ---------- */
+  .faq{max-width:760px;margin:0 auto}
+  details{background:#fff;border-radius:14px;margin-bottom:12px;box-shadow:0 4px 14px rgba(46,24,48,.06);overflow:hidden}
+  summary{cursor:pointer;padding:18px 22px;font-size:1.02rem;color:var(--berenjena);list-style:none;display:flex;justify-content:space-between;align-items:center}
+  summary::after{content:'+';font-size:1.4rem;color:var(--rosa);transition:transform .2s}
+  details[open] summary::after{transform:rotate(45deg)}
+  details .resp{padding:0 22px 18px;font-family:Verdana,Geneva,sans-serif;font-size:.85rem;color:var(--gris)}
+
+  /* ---------- Contacto / Footer ---------- */
+  .contacto-cta{background:linear-gradient(135deg,var(--berenjena-2),#241226);color:var(--crema);text-align:center}
+  .contacto-cta h2{font-size:2rem;font-weight:normal;margin:8px 0 12px}
+  .contacto-cta p{color:#D8C6D6;max-width:56ch;margin:0 auto 26px;font-family:Verdana,Geneva,sans-serif;font-size:.9rem}
+  .btn-whatsapp{display:inline-block;background:#25D366;color:#fff;padding:14px 32px;border-radius:999px;font-family:Verdana,Geneva,sans-serif;font-size:.85rem;letter-spacing:.08em;box-shadow:var(--sombra);transition:transform .15s}
+  .btn-whatsapp:hover{transform:translateY(-2px)}
   footer{background:var(--berenjena);color:#D8C6D6;padding:54px 0 30px}
   .footer-int{display:grid;grid-template-columns:1.2fr 1fr 1fr;gap:36px}
   footer h4{font-family:Verdana,Geneva,sans-serif;font-size:.72rem;letter-spacing:.25em;text-transform:uppercase;color:var(--dorado);margin-bottom:14px}
@@ -138,6 +172,7 @@
     .hero-logo{order:-1}
     nav .oculto-movil{display:none}
     .footer-int{grid-template-columns:1fr}
+    .hero-beneficios .contenedor{justify-content:center}
   }
 </style>
 </head>
@@ -151,8 +186,9 @@
     </a>
     <nav>
       <a href="#tienda">Tienda</a>
+      <a href="#categorias" class="oculto-movil">Categorías</a>
       <a href="#nosotros" class="oculto-movil">Nosotros</a>
-      <a href="#contacto" class="oculto-movil">Contacto</a>
+      <a href="#faq" class="oculto-movil">Preguntas</a>
       <button class="btn-carrito" id="abrirCarrito" aria-label="Abrir carrito">
         🛍 Carrito <span class="cuenta" id="cuentaCarrito">0</span>
       </button>
@@ -160,76 +196,199 @@
   </div>
 </header>
 
+<!-- ============ INICIO: banner + eslogan + botones + beneficios ============ -->
 <section class="hero" id="inicio" style="padding:0">
   <div class="hero-int">
     <div>
-      <p class="eyebrow">Belleza · Boutique · Bienestar</p>
-      <h1>Descubre lo que te hace <em>bella</em>, todos los días.</h1>
-      <p class="sub">Cosmética artesanal, aromas y rituales de cuidado personal elaborados con ingredientes naturales. Hechos con amor, pensados para ti.</p>
-      <a class="cta" href="#tienda">Explorar la tienda</a>
-      <a class="cta secundario" href="#nosotros">Conócenos</a>
+      <p class="eyebrow">Moda · Belleza · Bienestar</p>
+      <h1>Siéntete hermosa. Siéntete segura. Siéntete <em>Bella</em>.</h1>
+      <p class="sub">Vestidos, jeans, fajas moldeadoras, bisutería y todo lo que necesitas para verte elegante y moderna — con calidad premium a precios que sí puedes darte.</p>
+      <a class="cta" href="#tienda">Comprar ahora</a>
+      <a class="cta secundario" href="#categorias">Ver categorías</a>
     </div>
     <div class="hero-logo">
       <img src="assets/bella-monogram.svg" alt="Logo Bella">
     </div>
   </div>
+  <div class="hero-beneficios">
+    <div class="contenedor">
+      <span>📦 Envíos a todo el país</span>
+      <span>💎 Calidad garantizada</span>
+      <span>🔄 Cambios sin complicaciones</span>
+      <span>💬 Asesoría personalizada</span>
+    </div>
+  </div>
 </section>
 
+<!-- ============ CATEGORÍAS ============ -->
+<section class="categorias" id="categorias">
+  <div class="contenedor">
+    <div class="titulo-seccion">
+      <p class="eyebrow">Nuestras categorías</p>
+      <h2>Todo para tu estilo, en un solo lugar</h2>
+    </div>
+    <div class="rejilla-cat">
+      <div class="cat"><span class="emoji">👗</span><h3>Vestidos</h3><p>De casuales a gala: cortes que estilizan y telas que enamoran para cada ocasión.</p></div>
+      <div class="cat"><span class="emoji">🩱</span><h3>Fajas y prendas reductoras</h3><p>Moldea tu silueta con comodidad invisible. Seguridad que se siente, no se ve.</p></div>
+      <div class="cat"><span class="emoji">👚</span><h3>Blusas y camisas</h3><p>Básicos elevados y satinados con caída perfecta para el día a día y la oficina.</p></div>
+      <div class="cat"><span class="emoji">👖</span><h3>Jeans y ropa casual</h3><p>Calces que realzan tus curvas y te acompañan cómoda a todas partes.</p></div>
+      <div class="cat"><span class="emoji">✨</span><h3>Ropa elegante</h3><p>Piezas de noche y eventos para las ocasiones que merecen tu mejor versión.</p></div>
+      <div class="cat"><span class="emoji">💍</span><h3>Bisutería y accesorios</h3><p>Detalles dorados e hipoalergénicos que elevan cualquier look en segundos.</p></div>
+      <div class="cat"><span class="emoji">👜</span><h3>Carteras</h3><p>Elegancia funcional: diseños amplios con acabados premium para tu día.</p></div>
+      <div class="cat"><span class="emoji">💄</span><h3>Belleza y cosméticos</h3><p>Labiales y esenciales de belleza seleccionados para completar tu estilo.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ TIENDA ============ -->
 <section id="tienda">
   <div class="contenedor">
     <div class="titulo-seccion">
       <p class="eyebrow">Tienda digital</p>
-      <h2>Nuestros favoritos</h2>
+      <h2>Los favoritos de nuestras clientas</h2>
+      <p class="baja">Calidad que se nota, precios que se agradecen. Envío gratis en compras mayores a $50.</p>
     </div>
     <div class="rejilla" id="rejillaProductos"></div>
   </div>
 </section>
 
+<!-- ============ SOBRE NOSOTROS ============ -->
 <section class="nosotros" id="nosotros">
   <div class="contenedor nosotros-int">
     <div>
-      <div class="titulo-seccion" style="text-align:left;margin-bottom:22px">
-        <p class="eyebrow">Nuestra historia</p>
-        <h2>Hecho a mano, con propósito</h2>
-      </div>
-      <p>Bella nació de una idea sencilla: el cuidado personal debería sentirse como un regalo. Cada producto se elabora en pequeños lotes, con fórmulas limpias e ingredientes de origen responsable.</p>
-      <p>Creemos en la belleza que no se esconde: la que se cultiva con calma, ritual a ritual.</p>
+      <p class="eyebrow">Nuestra historia</p>
+      <h2 style="font-size:2.2rem;font-weight:normal;color:#fff;margin:8px 0 18px">Nacimos para que te elijas a ti</h2>
+      <p>Bella nació de una escena que se repetía demasiado: una mujer frente al espejo de un probador, enamorada de una prenda… y soltándola al ver la etiqueta. Decidimos que eso tenía que cambiar.</p>
+      <p>Hoy seleccionamos cada vestido, cada faja y cada accesorio con una sola pregunta: <em>¿la hará sentir hermosa, segura y elegante?</em> Si la respuesta no es un sí rotundo, no entra al catálogo.</p>
+      <p>Porque creemos que la belleza no es una talla, una edad ni una tendencia: es la seguridad con la que caminas. Y esa, te la mereces todos los días.</p>
     </div>
-    <div class="valores">
-      <div class="valor"><strong>🌿 Ingredientes naturales</strong><span>Fórmulas limpias, sin crueldad animal.</span></div>
-      <div class="valor"><strong>🎁 Empaque consciente</strong><span>Materiales reciclables y reutilizables.</span></div>
-      <div class="valor"><strong>🚚 Envío a todo el país</strong><span>Gratis en compras mayores a $50.</span></div>
+    <div class="hero-logo">
+      <img src="assets/bella-monogram.svg" alt="Monograma Bella" style="width:min(240px,60vw)">
     </div>
   </div>
 </section>
 
-<footer id="contacto">
+<!-- ============ POR QUÉ ELEGIR BELLA ============ -->
+<section class="porque" id="porque">
+  <div class="contenedor">
+    <div class="titulo-seccion">
+      <p class="eyebrow">¿Por qué elegir Bella?</p>
+      <h2>Razones para enamorarte</h2>
+    </div>
+    <div class="rejilla-cat">
+      <div class="cat"><h3>💎 Excelente calidad</h3><p>Telas y materiales que pasan nuestro control antes de llegar a tus manos. Lo bueno se nota al tacto.</p></div>
+      <div class="cat"><h3>🚚 Envíos rápidos</h3><p>Despachamos en 24 h y llegamos a todo el país. Gratis en compras mayores a $50.</p></div>
+      <div class="cat"><h3>💬 Atención personalizada</h3><p>Asesoría real de tallas y estilo por WhatsApp. Hablas con personas, no con robots.</p></div>
+      <div class="cat"><h3>🌟 Productos seleccionados</h3><p>No vendemos de todo: elegimos cada pieza pensando en ti y en las tendencias que sí favorecen.</p></div>
+      <div class="cat"><h3>🛡 Garantía de satisfacción</h3><p>15 días para cambios sin complicaciones. Si no te encanta, lo resolvemos.</p></div>
+      <div class="cat"><h3>👑 Moda en tendencia</h3><p>Colecciones nuevas cada temporada, siempre con precios accesibles y elegancia real.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ TESTIMONIOS ============ -->
+<section class="testimonios" id="testimonios">
+  <div class="contenedor">
+    <div class="titulo-seccion">
+      <p class="eyebrow">Testimonios</p>
+      <h2>Ellas ya se sienten Bella</h2>
+    </div>
+    <div class="rejilla-testi">
+      <div class="testi">
+        <span class="estrellas">★★★★★</span>
+        <p>«Pedí el vestido Elegancia para la graduación de mi hija y no dejaron de preguntarme dónde lo compré. La tela se siente mucho más cara de lo que pagué.»</p>
+        <span class="quien">Carolina M. — 41 años</span>
+      </div>
+      <div class="testi">
+        <span class="estrellas">★★★★★</span>
+        <p>«La faja invisible es otra cosa: la usé 10 horas en una boda y ni me acordé de que la tenía puesta. Además me asesoraron por WhatsApp con la talla exacta.»</p>
+        <span class="quien">Daniela R. — 29 años</span>
+      </div>
+      <div class="testi">
+        <span class="estrellas">★★★★★</span>
+        <p>«Compré los jeans con miedo porque nunca encuentro mi talla, y me quedaron perfectos. El paquete llegó en dos días con una tarjeta escrita a mano. Detalles así enamoran.»</p>
+        <span class="quien">Luz Ángela T. — 34 años</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PREGUNTAS FRECUENTES ============ -->
+<section id="faq">
+  <div class="contenedor">
+    <div class="titulo-seccion">
+      <p class="eyebrow">Preguntas frecuentes</p>
+      <h2>Resolvemos tus dudas</h2>
+    </div>
+    <div class="faq">
+      <details>
+        <summary>¿Cuánto tarda el envío y cuánto cuesta?</summary>
+        <div class="resp">Despachamos en 24 horas hábiles. En ciudades principales tu pedido llega en 24–48 h y en el resto del país en 2–5 días hábiles. El envío es <strong>gratis en compras mayores a $50</strong>; en pedidos menores tiene un costo fijo según tu zona, visible antes de pagar.</div>
+      </details>
+      <details>
+        <summary>¿Puedo cambiar una prenda si no me queda?</summary>
+        <div class="resp">Sí. Tienes <strong>15 días</strong> desde que recibes tu pedido para solicitar un cambio, siempre que la prenda esté sin uso y con etiquetas. El primer cambio por talla corre por nuestra cuenta.</div>
+      </details>
+      <details>
+        <summary>¿Cómo funcionan las devoluciones?</summary>
+        <div class="resp">Si el producto llega con algún defecto o no corresponde a tu pedido, te lo cambiamos o te devolvemos el dinero — tú eliges. Escríbenos por WhatsApp con tu número de pedido y lo resolvemos en menos de 24 h.</div>
+      </details>
+      <details>
+        <summary>¿Qué métodos de pago aceptan?</summary>
+        <div class="resp">Tarjetas de crédito y débito, transferencia bancaria y pago contra entrega en zonas seleccionadas. Todos los pagos se procesan de forma 100 % segura.</div>
+      </details>
+      <details>
+        <summary>¿Los productos tienen garantía?</summary>
+        <div class="resp">Sí: todos nuestros productos tienen <strong>garantía de satisfacción</strong>. La bisutería tiene 30 días de garantía por defectos en el baño dorado, y las prendas por defectos de confección.</div>
+      </details>
+      <details>
+        <summary>¿Cómo sé cuál es mi talla?</summary>
+        <div class="resp">Cada producto incluye su guía de tallas con medidas en centímetros. ¿Aún con dudas? Escríbenos por WhatsApp con tus medidas de busto, cintura y cadera y una asesora te confirma la talla exacta — es gratis y nuestras clientas casi nunca necesitan cambios cuando las asesoramos.</div>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CONTACTO ============ -->
+<section class="contacto-cta" id="contacto">
+  <div class="contenedor">
+    <p class="eyebrow">Contacto</p>
+    <h2>Hablemos — nos encanta ayudarte</h2>
+    <p>¿Dudas con tu talla? ¿Quieres armar un look completo? ¿Necesitas ayuda con tu pedido? Detrás de Bella hay un equipo real esperándote con gusto. Escríbenos por donde prefieras y te respondemos rapidito.</p>
+    <a class="btn-whatsapp" href="https://wa.me/5215500000000?text=Hola%20Bella%20%F0%9F%8C%B8%20quiero%20informaci%C3%B3n" target="_blank" rel="noopener">💬 Escríbenos por WhatsApp</a>
+    <p style="margin-top:22px">✉️ hola@bella.shop &nbsp;·&nbsp; 📱 @bella.oficial en Instagram, TikTok y Facebook</p>
+  </div>
+</section>
+
+<footer>
   <div class="contenedor footer-int">
     <div>
       <div class="footer-marca">
         <img class="mono" src="assets/bella-monogram.svg" alt="">
         <span>BELLA</span>
       </div>
-      <p style="font-family:Verdana,Geneva,sans-serif;font-size:.8rem;max-width:32ch">Belleza y bienestar artesanal. Gracias por apoyar lo hecho con amor.</p>
+      <p style="font-family:Verdana,Geneva,sans-serif;font-size:.8rem;max-width:34ch">Siéntete hermosa. Siéntete segura. Siéntete Bella. Moda y belleza femenina con calidad premium a precios accesibles.</p>
     </div>
     <div>
-      <h4>Contacto</h4>
+      <h4>Ayuda</h4>
       <ul>
-        <li>✉️ hola@bella.shop</li>
-        <li>📞 +52 55 0000 0000</li>
-        <li>📍 Ciudad de México</li>
+        <li><a href="#faq">Preguntas frecuentes</a></li>
+        <li><a href="#faq">Envíos y cambios</a></li>
+        <li><a href="#faq">Guía de tallas</a></li>
+        <li><a href="#contacto">Contacto</a></li>
       </ul>
     </div>
     <div>
       <h4>Síguenos</h4>
       <ul>
-        <li><a href="#">Instagram</a></li>
-        <li><a href="#">TikTok</a></li>
-        <li><a href="#">Facebook</a></li>
+        <li><a href="#" rel="noopener">Instagram</a></li>
+        <li><a href="#" rel="noopener">TikTok</a></li>
+        <li><a href="#" rel="noopener">Facebook</a></li>
+        <li><a href="https://wa.me/5215500000000" rel="noopener">WhatsApp</a></li>
       </ul>
     </div>
   </div>
-  <p class="copy">© 2026 Bella. Todos los derechos reservados.</p>
+  <p class="copy">© 2026 Bella. Todos los derechos reservados. Hecho con 💕 para mujeres que se eligen todos los días.</p>
 </footer>
 
 <!-- Carrito -->
@@ -263,7 +422,7 @@
     <div class="exito" id="mensajeExito" style="display:none">
       <div class="icono">💐</div>
       <h3>¡Gracias por tu pedido!</h3>
-      <p>Recibirás la confirmación por correo. Tu paquete Bella está en camino.</p>
+      <p>Recibirás la confirmación por correo y la guía de rastreo por WhatsApp. Ya queremos que lo estrenes. ✨</p>
       <button class="btn-pagar" data-cierra-modal>Seguir comprando</button>
     </div>
   </div>
@@ -273,12 +432,14 @@
 
 <script>
 const PRODUCTOS = [
-  {id:'serum',    nombre:'Sérum Iluminador',       precio:38, emoji:'✨', desc:'Vitamina C y rosa mosqueta para una piel radiante.',    fondo:'linear-gradient(135deg,#FDE8D8,#F9D5E5)'},
-  {id:'vela',     nombre:'Vela Aromática "Jardín"',precio:24, emoji:'🕯️', desc:'Cera de soya con jazmín, peonía y madera blanca.',      fondo:'linear-gradient(135deg,#F3EAE0,#E8DFF5)'},
-  {id:'crema',    nombre:'Crema de Rosas',         precio:29, emoji:'🌹', desc:'Hidratación profunda con agua de rosas búlgaras.',      fondo:'linear-gradient(135deg,#FBDDE4,#FDE8D8)'},
-  {id:'perfume',  nombre:'Perfume "Bella Noche"',  precio:56, emoji:'🌙', desc:'Notas de vainilla, ámbar y flor de azahar.',            fondo:'linear-gradient(135deg,#E4D5EE,#D8C6E8)'},
-  {id:'brochas',  nombre:'Kit de Brochas',         precio:32, emoji:'🖌️', desc:'Seis brochas veganas con estuche de viaje.',            fondo:'linear-gradient(135deg,#FDF0DC,#FBDDE4)'},
-  {id:'jabones',  nombre:'Jabones Artesanales ×3', precio:18, emoji:'🧼', desc:'Lavanda, avena-miel y carbón activado.',                fondo:'linear-gradient(135deg,#E0F0E6,#F3EAE0)'}
+  {id:'vestido',  nombre:'Vestido Midi "Elegancia"',      precio:45, emoji:'👗', desc:'Corte evasé que estiliza, tela premium antiarrugas. Tallas S–3XL.',        fondo:'linear-gradient(135deg,#FBDDE4,#FDE8D8)'},
+  {id:'faja',     nombre:'Faja Moldeadora Invisible',      precio:35, emoji:'🩱', desc:'Moldea sin marcarse bajo la ropa. Comodidad todo el día. S–3XL.',          fondo:'linear-gradient(135deg,#F3EAE0,#E8DFF5)'},
+  {id:'biyux',    nombre:'Set de Bisutería "Luna"',        precio:22, emoji:'💍', desc:'Collar, aretes y pulsera con baño de oro 18k. Hipoalergénico.',           fondo:'linear-gradient(135deg,#FDF0DC,#FBDDE4)'},
+  {id:'blusa',    nombre:'Blusa Satinada "Aurora"',        precio:28, emoji:'👚', desc:'Satén con caída elegante que favorece a todo cuerpo. 3 colores.',         fondo:'linear-gradient(135deg,#FDE8D8,#F9D5E5)'},
+  {id:'jeans',    nombre:'Jeans "Curva Perfecta"',         precio:39, emoji:'👖', desc:'Levanta cola, tiro alto y stretch real que no se deforma. Tallas 3–20.',  fondo:'linear-gradient(135deg,#E4D5EE,#D8C6E8)'},
+  {id:'cartera',  nombre:'Cartera "Milán"',                precio:42, emoji:'👜', desc:'3 compartimentos, herrajes dorados y correa desmontable.',                fondo:'linear-gradient(135deg,#F3EAE0,#FDF0DC)'},
+  {id:'labiales', nombre:'Kit de Labiales "Trío Bella"',   precio:19, emoji:'💄', desc:'Tres tonos mate de larga duración con vitamina E. Cruelty-free.',         fondo:'linear-gradient(135deg,#FBDDE4,#F9D5E5)'},
+  {id:'gala',     nombre:'Vestido de Gala "Noche Bella"',  precio:68, emoji:'🌙', desc:'Silueta reloj de arena con forro moldeador integrado. Edición limitada.', fondo:'linear-gradient(135deg,#D8C6E8,#E4D5EE)'}
 ];
 
 const CLAVE = 'bella-carrito';
@@ -306,7 +467,7 @@ function pintarProductos(){
 }
 
 function pintarCarrito(){
-  const ids = Object.keys(carrito);
+  const ids = Object.keys(carrito).filter(id => PRODUCTOS.some(p => p.id === id));
   const cont = $('#itemsCarrito');
   let total = 0, unidades = 0;
   if(!ids.length){
