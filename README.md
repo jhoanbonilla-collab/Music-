@@ -13,6 +13,7 @@ plaque and works in monochrome, gold foil, embossing, and engraving.
 
 → **[Brand guidelines & full asset index: `brand/README.md`](brand/README.md)**
 → **Identity presentation & mockups: [`brand/showcase.html`](brand/showcase.html)**
+→ **Inquiry → booking funnel (form, pipeline tracker, templates): [`funnel/README.md`](funnel/README.md)**
 
 ```
 brand/

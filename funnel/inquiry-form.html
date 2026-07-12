@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Book XolosaX — Live Saxophone for Your Event</title>
+<style>
+  :root{
+    --bg:#0e0e0f; --panel:#161618; --panel2:#1d1d20; --line:#2a2a2e;
+    --ink:#f3efe6; --muted:#8a867d;
+    --gold:#C89B3C; --gold-hi:#E7C964; --gold-lo:#9D7320;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{
+    background:var(--bg); color:var(--ink);
+    font:16px/1.6 "Helvetica Neue",Helvetica,Arial,sans-serif;
+    -webkit-font-smoothing:antialiased; padding:0 20px 80px;
+  }
+  .wrap{max-width:640px;margin:0 auto}
+  header{text-align:center;padding:56px 0 40px}
+  header .seal{width:84px;height:84px;margin:0 auto 20px}
+  header h1{
+    font-weight:300;font-size:clamp(26px,5vw,36px);letter-spacing:.35em;
+    text-transform:uppercase;text-indent:.35em;
+  }
+  header h1 b{font-weight:300;
+    background:linear-gradient(135deg,var(--gold-hi),var(--gold),var(--gold-lo));
+    -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
+  header p{color:var(--muted);margin-top:14px;font-size:15px}
+  .rule{width:64px;height:1px;margin:26px auto 0;
+    background:linear-gradient(90deg,transparent,var(--gold),transparent)}
+
+  form{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:34px 30px}
+  fieldset{border:0;margin:0 0 30px}
+  legend{
+    font-size:12px;letter-spacing:.28em;text-transform:uppercase;color:var(--gold);
+    margin-bottom:18px;font-weight:600;
+  }
+  .row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  @media(max-width:540px){.row{grid-template-columns:1fr}}
+  .field{margin-bottom:16px}
+  label{display:block;font-size:13px;color:var(--muted);margin-bottom:6px}
+  label .req{color:var(--gold)}
+  input,select,textarea{
+    width:100%;background:var(--panel2);border:1px solid var(--line);border-radius:8px;
+    color:var(--ink);padding:12px 14px;font:inherit;font-size:15px;
+  }
+  input:focus,select:focus,textarea:focus{outline:none;border-color:var(--gold)}
+  select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%23C89B3C' fill='none'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center}
+  textarea{min-height:96px;resize:vertical}
+
+  .tiers{display:grid;gap:12px}
+  .tier{position:relative}
+  .tier input{position:absolute;opacity:0;inset:0;width:auto;cursor:pointer}
+  .tier .card{
+    display:block;border:1px solid var(--line);border-radius:10px;padding:14px 16px;
+    cursor:pointer;background:var(--panel2);transition:border-color .15s;
+  }
+  .tier input:checked + .card{border-color:var(--gold);
+    box-shadow:0 0 0 1px var(--gold) inset}
+  .tier .name{display:block;font-size:15px;letter-spacing:.04em}
+  .tier .name b{color:var(--gold);font-weight:600;margin-right:8px}
+  .tier .desc{display:block;font-size:13px;color:var(--muted);margin-top:2px}
+
+  button{
+    width:100%;padding:16px;border:0;border-radius:10px;cursor:pointer;
+    font:600 14px/1 inherit;letter-spacing:.24em;text-transform:uppercase;text-indent:.24em;
+    color:#0e0e0f;background:linear-gradient(135deg,var(--gold-hi),var(--gold) 55%,var(--gold-lo));
+  }
+  button:hover{filter:brightness(1.07)}
+  .fineprint{text-align:center;color:var(--muted);font-size:13px;margin-top:14px}
+
+  #done{display:none;background:var(--panel);border:1px solid var(--gold);border-radius:14px;
+    padding:46px 34px;text-align:center}
+  #done .seal{width:64px;height:64px;margin:0 auto 18px}
+  #done h2{font-weight:300;letter-spacing:.2em;text-transform:uppercase;font-size:20px;margin-bottom:14px}
+  #done p{color:var(--muted);max-width:44ch;margin:0 auto 10px}
+  #done p b{color:var(--ink);font-weight:600}
+  footer{text-align:center;color:var(--muted);font-size:12px;letter-spacing:.2em;
+    text-transform:uppercase;margin-top:46px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="seal"><svg viewBox="0 0 512 512" role="img" aria-label="XolosaX seal"><defs><linearGradient id="g" x1="120" y1="90" x2="380" y2="430" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#E7C964"/><stop offset="0.5" stop-color="#C89B3C"/><stop offset="1" stop-color="#9D7320"/></linearGradient></defs><path d="M256,52 L460,256 L256,460 L52,256 Z" fill="none" stroke="url(#g)" stroke-width="5"/><circle cx="256" cy="52" r="6" fill="url(#g)"/><circle cx="460" cy="256" r="6" fill="url(#g)"/><circle cx="256" cy="460" r="6" fill="url(#g)"/><circle cx="52" cy="256" r="6" fill="url(#g)"/><g transform="translate(35.19,-6)"><path d="M340,158 C340,120 302,102 256,102 C204,102 168,132 168,178 C168,222 204,242 252,255 C302,268 340,288 340,334 C340,392 300,422 250,422 C214,422 186,406 180,374" fill="none" stroke="url(#g)" stroke-width="25" stroke-linecap="round" stroke-linejoin="round"/><g transform="translate(156,360) rotate(-32)"><ellipse cx="0" cy="0" rx="46" ry="29" fill="none" stroke="url(#g)" stroke-width="16.5"/></g><circle cx="234" cy="270" r="9.5" fill="url(#g)"/><circle cx="274" cy="297" r="9.5" fill="url(#g)"/><circle cx="314" cy="324" r="9.5" fill="url(#g)"/></g></svg></div>
+    <h1><b>Xolosa</b>X</h1>
+    <p>Live saxophone for events worth remembering.<br>
+       Two minutes here — an exact quote within 24 hours.</p>
+    <div class="rule"></div>
+  </header>
+
+  <!-- ─────────────────────────────────────────────────────────────────────
+       HOOKUP: set FORM_ENDPOINT in the script below to your Formspree /
+       FormSubmit / Basin endpoint (e.g. https://formspree.io/f/xxxxxxx).
+       Until then the form falls back to opening a pre-filled email.
+       ───────────────────────────────────────────────────────────────────── -->
+  <form id="inquiry" novalidate>
+
+    <fieldset>
+      <legend>About you</legend>
+      <div class="row">
+        <div class="field"><label>Your name <span class="req">*</span></label>
+          <input name="Name" required autocomplete="name"></div>
+        <div class="field"><label>Email <span class="req">*</span></label>
+          <input name="Email" type="email" required autocomplete="email"></div>
+      </div>
+      <div class="row">
+        <div class="field"><label>Phone / WhatsApp</label>
+          <input name="Phone" type="tel" autocomplete="tel"></div>
+        <div class="field"><label>How did you find XolosaX? <span class="req">*</span></label>
+          <select name="Source" required>
+            <option value="" disabled selected>Choose…</option>
+            <option>Website / search</option>
+            <option>Instagram / TikTok</option>
+            <option>Saw a live performance</option>
+            <option>Referral — a friend or planner</option>
+            <option>Venue recommendation</option>
+            <option>Other</option>
+          </select></div>
+      </div>
+      <div class="field" id="refField" style="display:none">
+        <label>Who can we thank for the referral?</label>
+        <input name="Referred by" placeholder="Their name">
+      </div>
+    </fieldset>
+
+    <fieldset>
+      <legend>Your event</legend>
+      <div class="row">
+        <div class="field"><label>Event type <span class="req">*</span></label>
+          <select name="Event type" required>
+            <option value="" disabled selected>Choose…</option>
+            <option>Wedding</option>
+            <option>Private party / birthday</option>
+            <option>Corporate event</option>
+            <option>Club / venue night</option>
+            <option>Brand event / launch</option>
+            <option>Other</option>
+          </select></div>
+        <div class="field"><label>Event date <span class="req">*</span></label>
+          <input name="Event date" type="date" required></div>
+      </div>
+      <div class="row">
+        <div class="field"><label>Is the date flexible?</label>
+          <select name="Date flexible">
+            <option>No — this date only</option>
+            <option>Somewhat — nearby dates work</option>
+            <option>Fully flexible</option>
+          </select></div>
+        <div class="field"><label>Guest count (approx.)</label>
+          <select name="Guest count">
+            <option value="" disabled selected>Choose…</option>
+            <option>Under 50</option><option>50 – 150</option>
+            <option>150 – 300</option><option>300+</option>
+          </select></div>
+      </div>
+      <div class="row">
+        <div class="field"><label>City <span class="req">*</span></label>
+          <input name="City" required placeholder="Where is the event?"></div>
+        <div class="field"><label>Venue (if booked)</label>
+          <input name="Venue" placeholder="Venue name, or “not booked yet”"></div>
+      </div>
+      <div class="field"><label>Performance window</label>
+        <select name="Performance window">
+          <option value="" disabled selected>How much live music are you picturing?</option>
+          <option>Up to 1 hour (ceremony or one set)</option>
+          <option>1 – 2 hours (cocktail / dinner)</option>
+          <option>2 – 3 hours (party sets)</option>
+          <option>The whole evening</option>
+          <option>Not sure yet</option>
+        </select></div>
+    </fieldset>
+
+    <fieldset>
+      <legend>The experience</legend>
+      <div class="tiers">
+        <label class="tier"><input type="radio" name="Tier" value="Tier I — Solo Sax Session">
+          <span class="card"><span class="name"><b>I</b>Solo Sax Session</span>
+          <span class="desc">Elegant solo saxophone — ceremonies, cocktail hours, dinners. Up to 2 × 45-min sets.</span></span></label>
+        <label class="tier"><input type="radio" name="Tier" value="Tier II — Sax × DJ Experience">
+          <span class="card"><span class="name"><b>II</b>Sax × DJ Experience</span>
+          <span class="desc">Live sax over DJ sets — wireless, in the crowd, up to 3 hours of party energy.</span></span></label>
+        <label class="tier"><input type="radio" name="Tier" value="Tier III — XolosaX Signature">
+          <span class="card"><span class="name"><b>III</b>XolosaX Signature</span>
+          <span class="desc">The full evening: ceremony → cocktail → party, with custom arrangements of your songs.</span></span></label>
+        <label class="tier"><input type="radio" name="Tier" value="Not sure — recommend" checked>
+          <span class="card"><span class="name"><b>?</b>Not sure — recommend something</span>
+          <span class="desc">Tell us about the event below and we'll point you at the right fit.</span></span></label>
+      </div>
+      <div class="field" style="margin-top:16px"><label>Budget range</label>
+        <select name="Budget">
+          <option value="" disabled selected>Optional — helps us tailor the quote</option>
+          <!-- Adjust these brackets to your market & tier pricing -->
+          <option>Under $1,000</option>
+          <option>$1,000 – $2,500</option>
+          <option>$2,500 – $5,000</option>
+          <option>$5,000+</option>
+          <option>Flexible for the right fit</option>
+        </select></div>
+      <div class="field"><label>Anything else we should know?</label>
+        <textarea name="Notes" placeholder="The vibe, must-play songs, timeline, your DJ, the story…"></textarea></div>
+    </fieldset>
+
+    <button type="submit">Request my quote</button>
+    <p class="fineprint">No obligation. A personal reply — availability + exact quote — within 24 hours.</p>
+  </form>
+
+  <div id="done">
+    <div class="seal"><svg viewBox="0 0 512 512" role="img" aria-label="XolosaX seal"><defs><linearGradient id="g2" x1="120" y1="90" x2="380" y2="430" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#E7C964"/><stop offset="0.5" stop-color="#C89B3C"/><stop offset="1" stop-color="#9D7320"/></linearGradient></defs><path d="M256,52 L460,256 L256,460 L52,256 Z" fill="none" stroke="url(#g2)" stroke-width="5"/><g transform="translate(35.19,-6)"><path d="M340,158 C340,120 302,102 256,102 C204,102 168,132 168,178 C168,222 204,242 252,255 C302,268 340,288 340,334 C340,392 300,422 250,422 C214,422 186,406 180,374" fill="none" stroke="url(#g2)" stroke-width="25" stroke-linecap="round" stroke-linejoin="round"/></g></svg></div>
+    <h2>Inquiry received</h2>
+    <p>Your date is being checked against the calendar right now.</p>
+    <p><b>You'll get a personal reply — availability and an exact quote — within 24 hours.</b></p>
+    <p>In a hurry? WhatsApp is fastest: <b>[PHONE / WHATSAPP]</b></p>
+  </div>
+
+  <footer>XolosaX · Music × Technology</footer>
+</div>
+
+<script>
+  // ── Configure once ───────────────────────────────────────────────────────
+  const FORM_ENDPOINT = "";                       // e.g. "https://formspree.io/f/xxxxxxx"
+  const FALLBACK_EMAIL = "booking@xolosax.com";   // used until FORM_ENDPOINT is set
+  // ─────────────────────────────────────────────────────────────────────────
+
+  const form = document.getElementById('inquiry');
+  const done = document.getElementById('done');
+
+  form.elements['Source'].addEventListener('change', e => {
+    document.getElementById('refField').style.display =
+      e.target.value.startsWith('Referral') ? '' : 'none';
+  });
+
+  form.addEventListener('submit', async e => {
+    e.preventDefault();
+    if (!form.reportValidity()) return;
+    const data = new FormData(form);
+    const lines = [...data.entries()].filter(([,v]) => v)
+      .map(([k,v]) => `${k}: ${v}`).join('\n');
+
+    if (FORM_ENDPOINT) {
+      try {
+        const r = await fetch(FORM_ENDPOINT, {
+          method:'POST', body:data, headers:{Accept:'application/json'}
+        });
+        if (!r.ok) throw new Error(r.status);
+      } catch {
+        alert('Something went wrong sending the form — please email ' + FALLBACK_EMAIL);
+        return;
+      }
+    } else {
+      const subject = `Booking inquiry — ${data.get('Event type')||'event'} on ${data.get('Event date')||'TBD'}`;
+      location.href = `mailto:${FALLBACK_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(lines)}`;
+    }
+    form.style.display = 'none';
+    done.style.display = 'block';
+    window.scrollTo({top:0, behavior:'smooth'});
+  });
+</script>
+</body>
+</html>
