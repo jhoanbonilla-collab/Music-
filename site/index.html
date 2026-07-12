@@ -8,15 +8,14 @@
 <style>
   :root{
     --bg:#0b0b0c; --bg2:#0e0e0f; --panel:#161618; --panel2:#1d1d20; --line:#2a2a2e;
-    --ink:#f3efe6; --muted:#8a867d;
+    --ink:#f3efe6; --muted:#8a867d; --navy:#0F172A;
     --gold:#C89B3C; --gold-hi:#E7C964; --gold-lo:#9D7320;
+    --brass:#B8860B; --champagne:#D4AF37;
   }
   *{box-sizing:border-box;margin:0;padding:0}
   html{scroll-behavior:smooth}
   body{background:var(--bg);color:var(--ink);
     font:16px/1.65 "Helvetica Neue",Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
-  .goldtext{background:linear-gradient(135deg,var(--gold-hi),var(--gold),var(--gold-lo));
-    -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
   .wrap{max-width:1060px;margin:0 auto;padding:0 24px}
   .rule{width:64px;height:1px;margin:22px auto;
     background:linear-gradient(90deg,transparent,var(--gold),transparent)}
@@ -26,19 +25,21 @@
   }
   .kicker{text-align:center;color:var(--gold);font-size:12px;letter-spacing:.34em;
     text-transform:uppercase;text-indent:.34em;margin-bottom:12px}
-  .lead{text-align:center;color:var(--muted);max-width:56ch;margin:0 auto}
+  .lead{text-align:center;color:var(--muted);max-width:60ch;margin:0 auto}
+  .lead b{color:var(--ink);font-weight:600}
 
   /* nav */
   nav{position:sticky;top:0;z-index:10;background:rgba(11,11,12,.92);backdrop-filter:blur(8px);
     border-bottom:1px solid var(--line)}
   nav .bar{display:flex;align-items:center;gap:12px;max-width:1060px;margin:0 auto;padding:14px 24px}
-  nav svg{width:30px;height:30px}
-  nav .word{font-size:15px;font-weight:300;letter-spacing:.3em;text-transform:uppercase}
+  nav .logo{display:flex;align-items:center;gap:12px;text-decoration:none}
+  nav .logo .s{width:32px;height:32px}
+  nav .logo .w{height:13px;width:auto;color:var(--gold)}
   nav .links{margin-left:auto;display:flex;gap:26px;align-items:center}
   nav .links a{color:var(--muted);text-decoration:none;font-size:13px;letter-spacing:.14em;text-transform:uppercase}
   nav .links a:hover{color:var(--gold-hi)}
   nav .links a.cta, nav .links a.cta:hover{color:#0e0e0f}
-  @media(max-width:640px){nav .links a:not(.cta){display:none}}
+  @media(max-width:760px){nav .links a:not(.cta){display:none}}
   .btn-gold{
     display:inline-block;padding:13px 30px;border-radius:9px;text-decoration:none;
     font-size:13px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;text-indent:.22em;
@@ -51,16 +52,18 @@
     text-transform:uppercase;text-indent:.22em}
   .btn-ghost:hover{border-color:var(--gold-hi)}
 
-  /* hero */
-  #hero{position:relative;text-align:center;padding:96px 24px 110px;overflow:hidden;
-    background:radial-gradient(ellipse 90% 70% at 50% -10%,#1d1a12 0%,var(--bg) 62%)}
-  #hero .seal{width:120px;height:120px;margin:0 auto 30px}
-  #hero h1{font-weight:300;font-size:clamp(34px,7vw,58px);letter-spacing:.3em;
-    text-transform:uppercase;text-indent:.3em}
-  #hero .tag{margin:22px auto 8px;font-size:clamp(17px,2.4vw,21px);color:var(--ink);
+  /* hero — showcase-style gold glow, real vertical lockup */
+  #hero{position:relative;text-align:center;padding:92px 24px 100px;overflow:hidden;
+    background:radial-gradient(120% 90% at 70% -10%,rgba(200,155,60,.16),transparent 55%),
+               linear-gradient(180deg,#101011,var(--bg))}
+  #hero .s{width:150px;height:150px;margin:0 auto}
+  #hero .w{width:min(430px,84%);height:auto;color:#FFFFFF;margin-top:26px}
+  #hero .brandtag{margin-top:26px;letter-spacing:.34em;text-transform:uppercase;
+    font-size:12px;color:var(--muted);text-indent:.34em}
+  #hero .tag{margin:30px auto 8px;font-size:clamp(17px,2.4vw,21px);color:var(--ink);
     font-weight:300;max-width:44ch}
   #hero .sub{color:var(--muted);max-width:52ch;margin:0 auto}
-  #hero .ctas{margin-top:38px;display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+  #hero .ctas{margin-top:36px;display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
   #hero .note{margin-top:18px;font-size:13px;color:var(--muted)}
 
   /* tiers */
@@ -104,8 +107,61 @@
   .step p{color:var(--muted);font-size:14.5px;margin-top:3px}
   .step b{color:var(--ink);font-weight:600}
 
+  /* the brand — from the identity showcase */
+  #brand{padding:90px 0;background:var(--bg2)}
+  .sym4{display:grid;grid-template-columns:repeat(4,1fr);gap:22px;margin-top:44px}
+  @media(max-width:820px){.sym4{grid-template-columns:repeat(2,1fr)}}
+  .tile{border-radius:16px;display:flex;align-items:center;justify-content:center;
+    overflow:hidden;border:1px solid #1d1d20}
+  .sym4 .tile{height:210px}
+  .bg-dark{background:#111111} .bg-white{background:#FFFFFF} .bg-navy{background:var(--navy)}
+  .bg-foil{background:linear-gradient(135deg,#E7C964,#C89B3C 45%,#9d7522)}
+  .sym4 svg{width:120px;height:120px}
+  .cap{font-size:12px;color:var(--muted);margin-top:10px;letter-spacing:.05em;text-align:center}
+
+  .palette{display:grid;grid-template-columns:repeat(6,1fr);gap:14px;margin-top:40px}
+  @media(max-width:820px){.palette{grid-template-columns:repeat(3,1fr)}}
+  .sw{height:120px;border-radius:14px;display:flex;flex-direction:column;
+    justify-content:flex-end;padding:14px;border:1px solid #1d1d20}
+  .sw small{display:block;opacity:.7;font-size:11px}
+  .sw b{font-size:13px;letter-spacing:.04em}
+
+  .apps{display:grid;grid-template-columns:repeat(2,1fr);gap:22px;margin-top:44px}
+  @media(max-width:820px){.apps{grid-template-columns:1fr}}
+  .apps .tile{height:300px;position:relative;padding:26px;background:#0e0e0f}
+  .center{display:flex;align-items:center;justify-content:center}
+
+  .bizcard{width:340px;max-width:92%;height:200px;border-radius:14px;
+    background:linear-gradient(145deg,#161616,#0e0e0e);
+    box-shadow:0 30px 60px rgba(0,0,0,.55);border:1px solid #242424;padding:22px;position:relative}
+  .bizcard svg{width:54px;height:54px}
+  .bizcard .nm{position:absolute;left:22px;bottom:20px}
+  .bizcard .nm .n{font-size:17px;letter-spacing:.16em;color:#f3efe6}
+  .bizcard .nm .r{font-size:10px;letter-spacing:.3em;color:var(--gold);text-transform:uppercase;margin-top:6px}
+  .bizcard .edge{position:absolute;right:0;top:0;bottom:0;width:6px;border-radius:0 14px 14px 0;
+    background:linear-gradient(180deg,var(--champagne),var(--brass))}
+
+  .emboss{width:200px;height:200px;border-radius:50%;
+    background:linear-gradient(145deg,#1a1a1a,#0b0b0b);
+    border:1px solid #2a2a2a;display:flex;align-items:center;justify-content:center;position:relative;
+    box-shadow:inset 0 2px 6px rgba(255,255,255,.05),inset 0 -6px 14px rgba(0,0,0,.7),0 24px 50px rgba(0,0,0,.5)}
+  .emboss::before{content:"";position:absolute;inset:14px;border-radius:50%;border:1px solid rgba(200,155,60,.35)}
+  .emboss svg{width:96px;height:96px;filter:drop-shadow(0 1px 0 rgba(255,255,255,.18)) drop-shadow(0 -1px 1px rgba(0,0,0,.6))}
+
+  .polo{background:radial-gradient(120% 120% at 30% 20%,#20242b,#0d1016);width:100%;height:100%;
+    display:flex;align-items:center;justify-content:center;border-radius:14px}
+  .polo svg{width:96px;height:96px;filter:drop-shadow(1px 1px 0 rgba(0,0,0,.4))}
+
+  .plaque{width:300px;max-width:92%;height:150px;border-radius:8px;
+    background:linear-gradient(135deg,#cdb46a,#9c7e3c 45%,#7c6224);
+    display:flex;align-items:center;justify-content:center;gap:16px;
+    box-shadow:0 24px 50px rgba(0,0,0,.5);position:relative;color:#111111}
+  .plaque::after{content:"";position:absolute;inset:8px;border:1px solid rgba(60,45,15,.4);border-radius:5px}
+  .plaque .s{width:64px;height:64px;filter:drop-shadow(0 1px 1px rgba(255,255,255,.3)) drop-shadow(0 -1px 1px rgba(0,0,0,.35))}
+  .plaque .w{width:150px;height:auto;filter:drop-shadow(0 1px 1px rgba(255,255,255,.3)) drop-shadow(0 -1px 1px rgba(0,0,0,.35))}
+
   /* booking form */
-  #book{padding:90px 0 100px;background:var(--bg2)}
+  #book{padding:90px 0 100px}
   form{background:var(--panel);border:1px solid var(--line);border-radius:14px;
     padding:34px 30px;max-width:640px;margin:44px auto 0}
   fieldset{border:0;margin:0 0 30px}
@@ -139,52 +195,88 @@
 
   #done{display:none;background:var(--panel);border:1px solid var(--gold);border-radius:14px;
     padding:46px 34px;text-align:center;max-width:640px;margin:44px auto 0}
-  #done .seal{width:64px;height:64px;margin:0 auto 18px}
+  #done svg{width:64px;height:64px;margin:0 auto 18px}
   #done h3{font-weight:300;letter-spacing:.2em;text-transform:uppercase;font-size:20px;margin-bottom:14px}
   #done p{color:var(--muted);max-width:44ch;margin:0 auto 10px}
   #done p b{color:var(--ink);font-weight:600}
 
-  footer{border-top:1px solid var(--line);padding:44px 24px;text-align:center}
-  footer .seal{width:44px;height:44px;margin:0 auto 14px;opacity:.9}
-  footer .word{font-size:13px;letter-spacing:.32em;text-transform:uppercase;text-indent:.32em}
-  footer p{color:var(--muted);font-size:12.5px;margin-top:10px;letter-spacing:.08em}
+  footer{border-top:1px solid var(--line);padding:48px 24px;text-align:center}
+  footer .s{width:46px;height:46px;margin:0 auto 16px;display:block}
+  footer .w{height:12px;width:auto;color:var(--gold)}
+  footer p{color:var(--muted);font-size:12.5px;margin-top:12px;letter-spacing:.08em}
+  footer .brandline{color:#6f6c64;font-size:11.5px;letter-spacing:.06em;margin-top:6px}
 </style>
 </head>
 <body>
 
+<!-- Brand assets (from brand/), inlined once and reused -->
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
   <defs>
-    <linearGradient id="gg" x1="120" y1="90" x2="380" y2="430" gradientUnits="userSpaceOnUse">
+    <linearGradient id="gx" x1="120" y1="90" x2="380" y2="430" gradientUnits="userSpaceOnUse">
       <stop offset="0" stop-color="#E7C964"/><stop offset="0.5" stop-color="#C89B3C"/><stop offset="1" stop-color="#9D7320"/>
     </linearGradient>
-    <g id="seal">
-      <path d="M256,52 L460,256 L256,460 L52,256 Z" fill="none" stroke="url(#gg)" stroke-width="5"/>
-      <circle cx="256" cy="52" r="6" fill="url(#gg)"/><circle cx="460" cy="256" r="6" fill="url(#gg)"/>
-      <circle cx="256" cy="460" r="6" fill="url(#gg)"/><circle cx="52" cy="256" r="6" fill="url(#gg)"/>
+
+    <!-- open S geometry (viewBox 0 0 512 512) -->
+    <g id="sGeom-inner">
+      <path d="M340,158 C340,120 302,102 256,102 C204,102 168,132 168,178 C168,222 204,242 252,255 C302,268 340,288 340,334 C340,392 300,422 250,422 C214,422 186,406 180,374" fill="none" stroke-width="25" stroke-linecap="round" stroke-linejoin="round"/>
+      <g transform="translate(156,360) rotate(-32)"><ellipse cx="0" cy="0" rx="46" ry="29" fill="none" stroke-width="16.5"/></g>
+      <circle cx="234" cy="270" r="9.5" stroke="none"/><circle cx="274" cy="297" r="9.5" stroke="none"/><circle cx="314" cy="324" r="9.5" stroke="none"/>
+    </g>
+    <g id="sGold" stroke="url(#gx)" fill="url(#gx)">
+      <g transform="translate(-9.63,-59.18) scale(1.2)"><use href="#sGeom-inner"/></g>
+    </g>
+    <g id="sMono" stroke="currentColor" fill="currentColor">
+      <g transform="translate(-9.63,-59.18) scale(1.2)"><use href="#sGeom-inner"/></g>
+    </g>
+
+    <!-- diamond seal (viewBox 0 0 512 512) -->
+    <g id="sealGeom">
+      <path d="M256,52 L460,256 L256,460 L52,256 Z" fill="none" stroke-width="5" class="d"/>
+      <circle cx="256" cy="52" r="6" stroke="none"/><circle cx="460" cy="256" r="6" stroke="none"/>
+      <circle cx="256" cy="460" r="6" stroke="none"/><circle cx="52" cy="256" r="6" stroke="none"/>
       <g transform="translate(35.19,-6)">
-        <path d="M340,158 C340,120 302,102 256,102 C204,102 168,132 168,178 C168,222 204,242 252,255 C302,268 340,288 340,334 C340,392 300,422 250,422 C214,422 186,406 180,374" fill="none" stroke="url(#gg)" stroke-width="25" stroke-linecap="round" stroke-linejoin="round"/>
-        <g transform="translate(156,360) rotate(-32)"><ellipse rx="46" ry="29" fill="none" stroke="url(#gg)" stroke-width="16.5"/></g>
-        <circle cx="234" cy="270" r="9.5" fill="url(#gg)"/><circle cx="274" cy="297" r="9.5" fill="url(#gg)"/><circle cx="314" cy="324" r="9.5" fill="url(#gg)"/>
+        <path d="M340,158 C340,120 302,102 256,102 C204,102 168,132 168,178 C168,222 204,242 252,255 C302,268 340,288 340,334 C340,392 300,422 250,422 C214,422 186,406 180,374" fill="none" stroke-width="25" stroke-linecap="round" stroke-linejoin="round"/>
+        <g transform="translate(156,360) rotate(-32)"><ellipse rx="46" ry="29" fill="none" stroke-width="16.5"/></g>
+        <circle cx="234" cy="270" r="9.5" stroke="none"/><circle cx="274" cy="297" r="9.5" stroke="none"/><circle cx="314" cy="324" r="9.5" stroke="none"/>
       </g>
     </g>
+    <g id="sealGold" stroke="url(#gx)" fill="url(#gx)"><use href="#sealGeom"/></g>
+    <g id="sealMono" stroke="currentColor" fill="currentColor"><use href="#sealGeom"/></g>
+
+    <!-- custom geometric wordmark (viewBox 0 0 1123.88 260) -->
+    <g id="wordGeom" transform="translate(40,0)" fill="none" stroke-width="21" stroke-linecap="round" stroke-linejoin="round">
+      <g><path d="M0,20 L150,220"/><path d="M0,220 L150,20"/></g>
+      <g transform="translate(180,0)"><circle cx="74" cy="146" r="74"/></g>
+      <g transform="translate(358,0)"><path d="M0,20 L0,220"/></g>
+      <g transform="translate(388,0)"><circle cx="74" cy="146" r="74"/></g>
+      <g transform="translate(566,0)"><path d="M 111.49,97.16 C 111.49,73.48 81.52,72 59.94,72 C 23.98,72 0,92.72 0,112.7 C 0,141.56 28.77,146 59.94,146 C 91.11,146 119.88,150.44 119.88,179.3 C 119.88,199.28 95.9,220 59.94,220 C 38.36,220 8.39,218.52 8.39,194.84"/></g>
+      <g transform="translate(715.88,0)"><circle cx="74" cy="146" r="74"/><path d="M148,72 L148,220"/></g>
+      <g transform="translate(893.88,0)"><path d="M0,20 L150,220"/><path d="M0,220 L150,20"/></g>
+    </g>
+    <g id="wordMono" stroke="currentColor"><use href="#wordGeom"/></g>
+    <g id="wordGold" stroke="url(#gx)"><use href="#wordGeom"/></g>
   </defs>
 </svg>
 
 <nav>
   <div class="bar">
-    <svg viewBox="0 0 512 512" aria-hidden="true"><use href="#seal"/></svg>
-    <span class="word"><span class="goldtext">Xolosa</span>X</span>
+    <a class="logo" href="#hero" aria-label="XolosaX home">
+      <svg class="s" viewBox="0 0 512 512" aria-hidden="true"><use href="#sGold"/></svg>
+      <svg class="w" viewBox="0 0 1123.88 260" role="img" aria-label="XolosaX"><use href="#wordMono"/></svg>
+    </a>
     <div class="links">
       <a href="#experience">The Experience</a>
       <a href="#how">How It Works</a>
+      <a href="#brand">The Brand</a>
       <a class="btn-gold cta" href="#book">Book the Date</a>
     </div>
   </div>
 </nav>
 
 <section id="hero">
-  <div class="seal"><svg viewBox="0 0 512 512" role="img" aria-label="XolosaX seal"><use href="#seal"/></svg></div>
-  <h1><span class="goldtext">Xolosa</span>X</h1>
+  <svg class="s" viewBox="0 0 512 512" role="img" aria-label="XolosaX Golden S"><use href="#sGold"/></svg>
+  <div><svg class="w" viewBox="0 0 1123.88 260" role="img" aria-label="XolosaX"><use href="#wordMono"/></svg></div>
+  <p class="brandtag">Music · Technology · Entrepreneurship</p>
   <p class="tag">Live saxophone for events worth remembering.</p>
   <p class="sub">From an unplugged ceremony to a sax-over-DJ dance floor — one artist,
      one seamless thread of live music through your entire event.</p>
@@ -269,6 +361,60 @@
       <div class="step"><div class="n"><span>5</span></div>
         <div><h4>We handle the rest — you enjoy the show</h4>
         <p>Logistics confirmed a week out, your song requests arranged, day-of coordination with your planner — not with you. Then: showtime.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<section id="brand">
+  <div class="wrap">
+    <p class="kicker">The Symbol</p>
+    <h2 class="section">The Golden S</h2>
+    <div class="rule"></div>
+    <p class="lead">An elegant monoline <b>S</b> — the saxophone's own S-curve — its lower
+       bowl opening into an abstracted <b>bell</b>, with three key <b>pearls</b> running down
+       the body. Enclosed in a fine <b>diamond seal</b> whose four points trace the X of
+       XolosaX, it becomes a crest. The music is hidden in the geometry — a refined cue,
+       never a literal horn.</p>
+
+    <div class="sym4">
+      <div><div class="tile bg-dark"><svg viewBox="0 0 512 512" role="img" aria-label="Open S, gold on black"><use href="#sGold"/></svg></div><div class="cap">Open S — gold on black</div></div>
+      <div><div class="tile bg-white"><svg viewBox="0 0 512 512" style="color:#111111" role="img" aria-label="Open S, black on white"><use href="#sMono"/></svg></div><div class="cap">Open S — black on white</div></div>
+      <div><div class="tile bg-navy"><svg viewBox="0 0 512 512" role="img" aria-label="Seal, gold on navy"><use href="#sealGold"/></svg></div><div class="cap">Seal — gold on navy</div></div>
+      <div><div class="tile bg-foil"><svg viewBox="0 0 512 512" style="color:#111111" role="img" aria-label="Seal, knockout on foil"><use href="#sealMono"/></svg></div><div class="cap">Seal — knockout / foil</div></div>
+    </div>
+
+    <div class="palette">
+      <div class="sw" style="background:#111;color:#fff"><b>Matte Black</b><small>#111111</small></div>
+      <div class="sw" style="background:#fff;color:#111"><b>White</b><small>#FFFFFF</small></div>
+      <div class="sw" style="background:#C89B3C;color:#1a1407"><b>Sax Gold</b><small>#C89B3C</small></div>
+      <div class="sw" style="background:#B8860B;color:#fff"><b>Brass Gold</b><small>#B8860B</small></div>
+      <div class="sw" style="background:#D4AF37;color:#2a2207"><b>Champagne</b><small>#D4AF37</small></div>
+      <div class="sw" style="background:#0F172A;color:#cfd6e6"><b>Deep Navy</b><small>#0F172A</small></div>
+    </div>
+
+    <div class="apps">
+      <div><div class="tile center">
+        <div class="bizcard">
+          <svg viewBox="0 0 512 512" aria-hidden="true"><use href="#sGold"/></svg>
+          <div class="edge"></div>
+          <div class="nm"><div class="n">JHOAN&nbsp;BONILLA</div><div class="r">Saxophonist · Founder</div></div>
+        </div>
+      </div><div class="cap">Luxury business card</div></div>
+
+      <div><div class="tile center">
+        <div class="emboss"><svg viewBox="0 0 512 512" aria-hidden="true"><use href="#sealGold"/></svg></div>
+      </div><div class="cap">Embossed gold seal</div></div>
+
+      <div><div class="tile center" style="padding:0">
+        <div class="polo"><svg viewBox="0 0 512 512" aria-hidden="true"><use href="#sGold"/></svg></div>
+      </div><div class="cap">Embroidered polo / apparel</div></div>
+
+      <div><div class="tile center">
+        <div class="plaque">
+          <svg class="s" viewBox="0 0 512 512" aria-hidden="true"><use href="#sMono"/></svg>
+          <svg class="w" viewBox="0 0 1123.88 260" aria-hidden="true"><use href="#wordMono"/></svg>
+        </div>
+      </div><div class="cap">Brushed gold metal plaque</div></div>
     </div>
   </div>
 </section>
@@ -392,7 +538,7 @@
     </form>
 
     <div id="done">
-      <div class="seal"><svg viewBox="0 0 512 512" role="img" aria-label="XolosaX seal"><use href="#seal"/></svg></div>
+      <svg viewBox="0 0 512 512" role="img" aria-label="XolosaX seal"><use href="#sealGold"/></svg>
       <h3>Inquiry received</h3>
       <p>Your date is being checked against the calendar right now.</p>
       <p><b>You'll get a personal reply — availability and an exact quote — within 24 hours.</b></p>
@@ -402,9 +548,10 @@
 </section>
 
 <footer>
-  <div class="seal"><svg viewBox="0 0 512 512" aria-hidden="true"><use href="#seal"/></svg></div>
-  <div class="word"><span class="goldtext">Xolosa</span>X</div>
-  <p>Music × Technology · [CITY] · booking@xolosax.com · [INSTAGRAM]</p>
+  <svg class="s" viewBox="0 0 512 512" aria-hidden="true"><use href="#sGold"/></svg>
+  <svg class="w" viewBox="0 0 1123.88 260" role="img" aria-label="XolosaX"><use href="#wordMono"/></svg>
+  <p>Jhoan Bonilla · Saxophonist & Founder · [CITY] · booking@xolosax.com · [INSTAGRAM]</p>
+  <p class="brandline">Music · Technology · Entrepreneurship — Matte Black / White / Saxophone Gold</p>
 </footer>
 
 <script>
