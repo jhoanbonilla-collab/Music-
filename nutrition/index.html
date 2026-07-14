@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NourishWeek — Family Meal Planner</title>
+<style>
+  :root{
+    --bg:#faf7f2; --card:#ffffff; --ink:#2d2a26; --ink-soft:#6b645b;
+    --accent:#3e7d5a; --accent-strong:#2e5f44; --header-bg:#2e5f44; --accent-soft:#e7f1eb;
+    --gold:#c98a3d; --line:#e8e1d6; --danger:#b5443c; --danger-soft:#f7e4e2;
+    --field:#fffdf9; --zebra:#faf6ef; --code-bg:#f4efe6; --head-ink:#fdfaf4;
+    --radius:14px; --shadow:0 2px 12px rgba(60,50,30,.07);
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#1c1a16; --card:#262319; --ink:#eae4d8; --ink-soft:#a89e8e;
+      --accent:#4f9a72; --accent-strong:#8fcbaa; --header-bg:#274b3a; --accent-soft:#2b3a31;
+      --gold:#d9a35c; --line:#3b362c; --danger:#e08078; --danger-soft:#462b27;
+      --field:#2d2920; --zebra:#2b2820; --code-bg:#332f25; --head-ink:#f2ecdf;
+      --shadow:0 2px 12px rgba(0,0,0,.35);
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#1c1a16; --card:#262319; --ink:#eae4d8; --ink-soft:#a89e8e;
+    --accent:#4f9a72; --accent-strong:#8fcbaa; --header-bg:#274b3a; --accent-soft:#2b3a31;
+    --gold:#d9a35c; --line:#3b362c; --danger:#e08078; --danger-soft:#462b27;
+    --field:#2d2920; --zebra:#2b2820; --code-bg:#332f25; --head-ink:#f2ecdf;
+    --shadow:0 2px 12px rgba(0,0,0,.35);
+  }
+  :root[data-theme="light"]{
+    --bg:#faf7f2; --card:#ffffff; --ink:#2d2a26; --ink-soft:#6b645b;
+    --accent:#3e7d5a; --accent-strong:#2e5f44; --header-bg:#2e5f44; --accent-soft:#e7f1eb;
+    --gold:#c98a3d; --line:#e8e1d6; --danger:#b5443c; --danger-soft:#f7e4e2;
+    --field:#fffdf9; --zebra:#faf6ef; --code-bg:#f4efe6; --head-ink:#fdfaf4;
+    --shadow:0 2px 12px rgba(60,50,30,.07);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:Georgia,"Times New Roman",serif;background:var(--bg);color:var(--ink);line-height:1.55}
+  header{background:var(--header-bg);color:var(--head-ink);padding:26px 20px 22px;text-align:center}
+  header h1{font-size:1.7rem;letter-spacing:.5px;font-weight:normal}
+  header h1 b{color:#f3d9ae}
+  header p{font-size:.95rem;opacity:.85;margin-top:5px;font-style:italic}
+  .wrap{max-width:980px;margin:0 auto;padding:18px 16px 60px}
+  nav.tabs{display:flex;gap:8px;margin:14px 0 20px;flex-wrap:wrap}
+  nav.tabs button{
+    font:inherit;font-size:.95rem;padding:9px 18px;border-radius:999px;border:1px solid var(--line);
+    background:var(--card);color:var(--ink-soft);cursor:pointer;box-shadow:var(--shadow)
+  }
+  nav.tabs button.active{background:var(--accent);border-color:var(--accent);color:#fff}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:20px;margin-bottom:18px}
+  .card h2{font-size:1.15rem;margin-bottom:12px;color:var(--accent-strong)}
+  .card h2 small{font-weight:normal;color:var(--ink-soft);font-size:.8rem;margin-left:6px}
+  label.field{display:block;font-size:.85rem;color:var(--ink-soft);margin:12px 0 4px}
+  input[type=text],input[type=password],input[type=date],textarea,select{
+    width:100%;font:inherit;font-size:.95rem;padding:9px 11px;border:1px solid var(--line);
+    border-radius:8px;background:var(--field);color:var(--ink)
+  }
+  textarea{min-height:74px;resize:vertical}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:0 18px}
+  @media(max-width:640px){.grid2{grid-template-columns:1fr}}
+  .checks{display:grid;grid-template-columns:1fr 1fr;gap:8px 14px;margin-top:6px}
+  @media(max-width:640px){.checks{grid-template-columns:1fr}}
+  .checks label{display:flex;gap:9px;align-items:flex-start;font-size:.92rem;cursor:pointer;padding:9px 11px;border:1px solid var(--line);border-radius:9px;background:var(--field)}
+  .checks label:has(input:checked){background:var(--accent-soft);border-color:var(--accent)}
+  .checks input{margin-top:3px;accent-color:var(--accent)}
+  .btnrow{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+  button.btn{
+    font:inherit;font-size:.98rem;padding:11px 20px;border-radius:9px;border:1px solid var(--accent);
+    background:var(--accent);color:#fff;cursor:pointer
+  }
+  button.btn:hover{background:var(--header-bg)}
+  button.btn.secondary{background:transparent;color:var(--accent-strong)}
+  button.btn.ghost{background:transparent;color:var(--ink-soft);border-color:var(--line)}
+  button.btn:disabled{opacity:.5;cursor:not-allowed}
+  .hint{font-size:.8rem;color:var(--ink-soft);margin-top:8px;font-style:italic}
+  .status{font-size:.9rem;margin-top:12px;padding:10px 13px;border-radius:9px;display:none}
+  .status.show{display:block}
+  .status.info{background:var(--accent-soft);color:var(--accent-strong)}
+  .status.err{background:var(--danger-soft);color:var(--danger)}
+  details.prompt-preview{margin-top:14px}
+  details.prompt-preview summary{cursor:pointer;font-size:.88rem;color:var(--accent-strong)}
+  details.prompt-preview pre{
+    white-space:pre-wrap;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.76rem;
+    background:var(--code-bg);border:1px solid var(--line);border-radius:9px;padding:14px;margin-top:8px;max-height:340px;overflow:auto
+  }
+  /* rendered plan */
+  .plan{font-size:.95rem}
+  .plan h1{font-size:1.5rem;margin:22px 0 10px;color:var(--accent-strong)}
+  .plan h2{font-size:1.25rem;margin:22px 0 8px;color:var(--accent-strong);border-bottom:2px solid var(--accent-soft);padding-bottom:4px}
+  .plan h3{font-size:1.08rem;margin:18px 0 6px;color:var(--ink)}
+  .plan h4{font-size:.98rem;margin:14px 0 5px}
+  .plan p{margin:8px 0}
+  .plan ul,.plan ol{margin:8px 0 8px 24px}
+  .plan li{margin:3px 0}
+  .plan hr{border:none;border-top:1px solid var(--line);margin:18px 0}
+  .plan blockquote{border-left:3px solid var(--gold);padding-left:12px;color:var(--ink-soft);margin:10px 0}
+  .plan code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.85em;background:var(--code-bg);padding:1px 5px;border-radius:4px}
+  .table-scroll{overflow-x:auto;margin:10px 0}
+  .plan table{border-collapse:collapse;width:100%;font-size:.86rem}
+  .plan th{background:var(--header-bg);color:var(--head-ink);text-align:left;padding:7px 10px;white-space:nowrap}
+  .plan td{border-bottom:1px solid var(--line);padding:7px 10px;vertical-align:top}
+  .plan tr:nth-child(even) td{background:var(--zebra)}
+  .cursor{display:inline-block;width:8px;height:1.05em;background:var(--accent);vertical-align:text-bottom;animation:blink .8s steps(1) infinite}
+  @keyframes blink{50%{opacity:0}}
+  /* history */
+  .hist-item{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:13px 4px;border-bottom:1px solid var(--line)}
+  .hist-item:last-child{border-bottom:none}
+  .hist-item .meta{font-size:.85rem;color:var(--ink-soft)}
+  .hist-item .actions{display:flex;gap:8px;flex-shrink:0}
+  .hist-item button{font:inherit;font-size:.82rem;padding:6px 12px;border-radius:7px;border:1px solid var(--line);background:var(--field);cursor:pointer;color:var(--ink)}
+  .hist-item button.del{color:var(--danger)}
+  .empty{color:var(--ink-soft);font-style:italic;font-size:.92rem;padding:8px 0}
+  .pill{display:inline-block;font-size:.72rem;background:var(--accent-soft);color:var(--accent-strong);border-radius:999px;padding:2px 10px;margin-left:8px;vertical-align:middle}
+  @media print{
+    header,nav.tabs,.no-print{display:none !important}
+    body{background:#fff}
+    .card{border:none;box-shadow:none;padding:0}
+    .wrap{max-width:100%;padding:0}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Nourish<b>Week</b></h1>
+  <p>High-protein weekly meal plans for a breastfeeding mum, a busy dad &amp; a brand-new baby</p>
+</header>
+
+<div class="wrap">
+
+<nav class="tabs no-print">
+  <button data-tab="builder" class="active">1 · Plan Builder</button>
+  <button data-tab="plan">2 · This Week's Plan</button>
+  <button data-tab="history">3 · Past Weeks</button>
+  <button data-tab="settings">Settings</button>
+</nav>
+
+<!-- ============ BUILDER ============ -->
+<section id="tab-builder">
+
+  <div class="card">
+    <h2>This week's tweaks <small>optional — the master prompt already covers everything</small></h2>
+    <div class="checks">
+      <label><input type="checkbox" id="tw-pantry"> Use only ingredients already in our pantry</label>
+      <label><input type="checkbox" id="tw-lunch600"> Make every lunch under 600&nbsp;kcal</label>
+      <label><input type="checkbox" id="tw-veg"> Include two vegetarian dinners</label>
+      <label><input type="checkbox" id="tw-noseafood"> No seafood this week</label>
+      <label><input type="checkbox" id="tw-fatloss"> Target gentle fat loss for me (never restrict my wife's calories while breastfeeding)</label>
+      <label><input type="checkbox" id="tw-14lunch"> Produce enough lunches for 14 meals (7 days × 2 adults)</label>
+    </div>
+
+    <div id="pantry-box" style="display:none">
+      <label class="field" for="tw-pantry-list">What's in the pantry / fridge right now</label>
+      <textarea id="tw-pantry-list" placeholder="e.g. 2kg chicken thighs in freezer, brown rice, tinned chickpeas, oats, frozen broccoli, eggs, greek yoghurt…"></textarea>
+    </div>
+
+    <label class="field" for="tw-avoid">Ingredients to avoid this week (allergies, dislikes, out of season)</label>
+    <input type="text" id="tw-avoid" placeholder="e.g. mushrooms, kiwi">
+
+    <label class="field" for="tw-custom">Anything else for this week</label>
+    <textarea id="tw-custom" placeholder="e.g. We have family visiting Wednesday night, make that dinner stretch to 4 adults. Baby had a rough week — make Sunday prep 2 hours max."></textarea>
+  </div>
+
+  <div class="card">
+    <h2>Generate the plan</h2>
+    <p class="hint" style="margin-top:0">Runs your full dietitian prompt (with this week's tweaks and your baby's current age) against Claude. Or copy the prompt and paste it into claude.ai yourself.</p>
+    <div class="btnrow">
+      <button class="btn" id="btn-generate">Generate with Claude</button>
+      <button class="btn secondary" id="btn-copy">Copy full prompt</button>
+      <button class="btn ghost" id="btn-stop" style="display:none">Stop</button>
+    </div>
+    <div class="status" id="gen-status"></div>
+    <details class="prompt-preview">
+      <summary>Preview the exact prompt that will be sent</summary>
+      <pre id="prompt-preview"></pre>
+    </details>
+  </div>
+
+  <div class="card">
+    <h2>Or paste a plan you generated elsewhere</h2>
+    <textarea id="paste-plan" placeholder="Paste the markdown response from claude.ai / another chat here…"></textarea>
+    <div class="btnrow">
+      <button class="btn secondary" id="btn-paste">Use pasted plan</button>
+    </div>
+  </div>
+
+</section>
+
+<!-- ============ PLAN ============ -->
+<section id="tab-plan" style="display:none">
+  <div class="card">
+    <div class="no-print" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:8px">
+      <h2 style="margin:0">This week's plan <span class="pill" id="plan-label" style="display:none"></span></h2>
+      <div class="btnrow" style="margin:0">
+        <button class="btn secondary" id="btn-save">Save to Past Weeks</button>
+        <button class="btn ghost" id="btn-print">Print</button>
+        <button class="btn ghost" id="btn-download">Download .md</button>
+      </div>
+    </div>
+    <div class="plan" id="plan-output"><p class="empty">No plan yet — generate one in the Plan Builder tab.</p></div>
+  </div>
+</section>
+
+<!-- ============ HISTORY ============ -->
+<section id="tab-history" style="display:none">
+  <div class="card">
+    <h2>Past weeks</h2>
+    <div id="hist-list"><p class="empty">Saved plans will appear here.</p></div>
+  </div>
+</section>
+
+<!-- ============ SETTINGS ============ -->
+<section id="tab-settings" style="display:none">
+  <div class="card">
+    <h2>Family &amp; nutrition settings</h2>
+    <div class="grid2">
+      <div>
+        <label class="field" for="set-baby">Baby's date of birth <span style="font-weight:normal">(so the prompt always states the right age)</span></label>
+        <input type="date" id="set-baby">
+      </div>
+      <div>
+        <label class="field" for="set-stores">Supermarkets / country</label>
+        <input type="text" id="set-stores" placeholder="Woolworths, Coles, Aldi and Costco (Australia)">
+      </div>
+      <div>
+        <label class="field" for="set-protein-me">My protein target (g/day)</label>
+        <input type="text" id="set-protein-me" placeholder="130–170">
+      </div>
+      <div>
+        <label class="field" for="set-protein-wife">My wife's protein target (g/day, breastfeeding)</label>
+        <input type="text" id="set-protein-wife" placeholder="110–140">
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Claude API</h2>
+    <label class="field" for="set-key">API key <span style="font-weight:normal">(stored only in this browser's localStorage — get one at console.anthropic.com)</span></label>
+    <input type="password" id="set-key" placeholder="sk-ant-…">
+    <p class="hint">Only needed for the "Generate with Claude" button. "Copy full prompt" works without a key — paste it into claude.ai instead.</p>
+  </div>
+
+  <div class="card">
+    <div class="btnrow" style="margin-top:0">
+      <button class="btn" id="btn-save-settings">Save settings</button>
+    </div>
+    <div class="status" id="set-status"></div>
+  </div>
+</section>
+
+</div>
+
+<script>
+"use strict";
+
+/* ---------- storage ---------- */
+const LS = {
+  settings: "nourishweek_settings",
+  history:  "nourishweek_history",
+  current:  "nourishweek_current",
+  tweaks:   "nourishweek_tweaks",
+};
+const load = (k, d) => { try { return JSON.parse(localStorage.getItem(k)) ?? d; } catch { return d; } };
+const save = (k, v) => localStorage.setItem(k, JSON.stringify(v));
+
+const defaults = {
+  babyDob: "2026-05-25",
+  stores: "Woolworths, Coles, Aldi and Costco (Australia)",
+  proteinMe: "130–170",
+  proteinWife: "110–140",
+  apiKey: "",
+};
+let settings = Object.assign({}, defaults, load(LS.settings, {}));
+let history  = load(LS.history, []);
+let current  = load(LS.current, null); // {md, label, date}
+
+/* ---------- tabs ---------- */
+const tabs = document.querySelectorAll("nav.tabs button");
+function showTab(name){
+  tabs.forEach(b => b.classList.toggle("active", b.dataset.tab === name));
+  ["builder","plan","history","settings"].forEach(t =>
+    document.getElementById("tab-" + t).style.display = (t === name ? "" : "none"));
+}
+tabs.forEach(b => b.addEventListener("click", () => showTab(b.dataset.tab)));
+
+/* ---------- baby age ---------- */
+function babyAgeText(){
+  const dob = new Date(settings.babyDob + "T00:00:00");
+  if (isNaN(dob)) return "a young baby";
+  const weeks = Math.max(0, Math.floor((Date.now() - dob.getTime()) / (7 * 864e5)));
+  if (weeks < 16) return weeks + "-week-old baby";
+  const months = Math.floor(weeks / 4.345);
+  return months + "-month-old baby";
+}
+
+/* ---------- prompt ---------- */
+function tweakLines(){
+  const t = [];
+  const val = id => document.getElementById(id).value.trim();
+  const on  = id => document.getElementById(id).checked;
+  if (on("tw-pantry")) {
+    t.push("Use only ingredients already in our pantry." +
+      (val("tw-pantry-list") ? " Here is what we currently have: " + val("tw-pantry-list") : ""));
+  }
+  if (on("tw-lunch600"))  t.push("Make every lunch under 600 kcal.");
+  if (on("tw-veg"))       t.push("Include two vegetarian dinners.");
+  if (on("tw-noseafood")) t.push("No seafood this week.");
+  if (on("tw-fatloss"))   t.push("Target gentle fat loss for me while maintaining muscle. Do NOT restrict my wife's calories — she is breastfeeding and needs full calories to support milk supply.");
+  if (on("tw-14lunch"))   t.push("Produce enough lunches for 14 meals (7 days × 2 adults).");
+  if (val("tw-avoid"))    t.push("Avoid these ingredients this week: " + val("tw-avoid") + ".");
+  if (val("tw-custom"))   t.push(val("tw-custom"));
+  return t;
+}
+
+function buildPrompt(){
+  const extra = tweakLines();
+  return `You are an expert Registered Dietitian, sports nutritionist, meal-prep coach, and family nutrition planner.
+
+Your task is to create a practical, evidence-based 7-day meal plan for my wife and me.
+
+## Our Situation
+
+- We are a family of three with a ${babyAgeText()}.
+- My wife is exclusively breastfeeding, so her meals should support milk production and meet the increased nutritional requirements of lactation.
+- We have limited time to cook because we are caring for a newborn.
+- We want to eat cleaner, increase our protein intake, and develop sustainable eating habits.
+- We live in Australia, so use ingredients commonly available in Australian supermarkets (${settings.stores}).
+
+## Main Goals
+
+Design meals that are:
+
+- High in protein
+- Nutritionally balanced
+- Rich in vegetables
+- Moderate in healthy carbohydrates
+- Rich in healthy fats
+- High in fibre
+- Easy to meal prep
+- Budget friendly
+- Family friendly
+- Simple enough to cook while caring for a newborn
+
+## Nutrition Requirements
+
+Every day should include:
+
+- Breakfast
+- 11:00 am Snack
+- Lunch
+- 4:00 pm Snack
+- Dinner
+- 9:00 pm Snack
+
+Protein should be the priority at every meal.
+
+Aim for approximately:
+
+**Me**
+- ${settings.proteinMe} g protein/day
+
+**My wife (breastfeeding)**
+- ${settings.proteinWife} g protein/day
+- Additional calories appropriate for breastfeeding
+- Adequate calcium
+- Adequate iron
+- Adequate iodine
+- Adequate vitamin D
+- Adequate omega-3 fats
+- Plenty of hydration reminders throughout the day
+
+Meals should naturally include foods rich in these nutrients rather than relying on supplements unless necessary.
+
+## Foods We Enjoy
+
+Use these regularly:
+
+**Proteins:** Chicken breast, chicken thighs, chicken drumsticks, lean beef, lean beef mince, salmon, tuna, eggs, Greek yoghurt, cottage cheese, milk, cheese, beans, lentils, chickpeas
+
+**Vegetables:** Broccoli, pumpkin, mushrooms, carrots, onion, capsicum, tomatoes, spinach, lettuce, cucumber, zucchini, sweet potato, potatoes
+
+**Carbohydrates:** Rice, pasta, oats, wholegrain bread, wraps, quinoa, brown rice, sweet potato
+
+**Healthy fats:** Avocado, olive oil, mixed nuts, almonds, walnuts, peanut butter, chia seeds, flaxseed, pumpkin seeds
+
+**Fruit:** Bananas, apples, berries, oranges, grapes, kiwi
+
+## Meal Prep Requirements
+
+Design the meals so that:
+
+- Most lunches are leftovers from dinner.
+- We only cook 2–3 major meals during the week.
+- Sunday is the primary meal-prep day.
+- Meals freeze well.
+- Meals reheat well.
+- Daily cooking takes less than 20 minutes.
+- Total Sunday meal prep takes no longer than 3–4 hours.
+
+## Variety
+
+Avoid repeating exactly the same breakfast every day. Rotate between: eggs, overnight oats, Greek yoghurt bowls, protein smoothies, cottage cheese bowls.
+
+Rotate lunches and dinners between: chicken, beef, salmon, pasta, rice bowls, stir-fries, sheet-pan meals, slow cooker meals, curries, burrito bowls.
+
+## Snacks
+
+Snacks should be high in protein and quick to eat. Examples include: Greek yoghurt, cottage cheese, protein smoothie, boiled eggs, cheese and fruit, hummus with vegetables, nuts, protein muffins, tuna and crackers.
+
+## Output Format
+
+For each day, create a markdown table with these columns:
+
+- Meal
+- Ingredients
+- Portion size for each adult
+- Calories (approximate)
+- Protein
+- Carbohydrates
+- Fat
+- Fibre
+
+At the end of each day include totals for each adult: calories, protein, carbohydrates, fats, fibre.
+
+## After the Weekly Plan
+
+Create the following sections:
+
+### 1. Consolidated Shopping List
+Group ingredients into: Protein, Vegetables, Fruit, Dairy, Pantry, Frozen, Healthy fats, Herbs and spices. Include estimated quantities for one week.
+
+### 2. Sunday Meal Prep Guide
+Provide a step-by-step cooking schedule in the most efficient order. Include: preparation, cooking times, containers required, refrigeration instructions, freezing instructions.
+
+### 3. Storage Guide
+State how many days each meal lasts in the fridge and in the freezer. Explain the safest reheating method.
+
+### 4. Time Saving Tips
+Suggest: which ingredients can be chopped in advance, which sauces can be made ahead, which meals freeze best, which meals can be doubled for future weeks.
+
+### 5. Cost Estimate
+Estimate the weekly grocery cost in Australian dollars. Suggest substitutions to reduce cost while maintaining nutritional quality.
+
+### 6. Nutrition Review
+Evaluate the week's nutrition by rating it out of 10 for: protein intake, micronutrients, fibre, healthy fats, variety, breastfeeding support, meal-prep efficiency, budget friendliness. Explain why each score was given and suggest improvements for the following week.
+
+Because my wife is breastfeeding, the plan must avoid aggressive calorie restriction for her. A gradual, balanced approach with adequate protein, hydration, and nutrient-rich foods is required to support milk production.` +
+  (extra.length ? `\n\n## Extra Instructions For This Week\n\n${extra.map(x => "- " + x).join("\n")}` : "");
+}
+
+function refreshPreview(){
+  document.getElementById("prompt-preview").textContent = buildPrompt();
+}
+document.querySelectorAll("#tab-builder input, #tab-builder textarea").forEach(el => {
+  el.addEventListener("input", () => { persistTweaks(); refreshPreview(); });
+  el.addEventListener("change", () => { persistTweaks(); refreshPreview(); });
+});
+document.getElementById("tw-pantry").addEventListener("change", e => {
+  document.getElementById("pantry-box").style.display = e.target.checked ? "" : "none";
+});
+
+/* remember this week's tweaks between visits */
+const TWEAK_IDS = ["tw-pantry","tw-lunch600","tw-veg","tw-noseafood","tw-fatloss","tw-14lunch"];
+const TWEAK_TEXT = ["tw-pantry-list","tw-avoid","tw-custom"];
+function persistTweaks(){
+  const t = {};
+  TWEAK_IDS.forEach(id => t[id] = document.getElementById(id).checked);
+  TWEAK_TEXT.forEach(id => t[id] = document.getElementById(id).value);
+  save(LS.tweaks, t);
+}
+function restoreTweaks(){
+  const t = load(LS.tweaks, {});
+  TWEAK_IDS.forEach(id => { if (id in t) document.getElementById(id).checked = t[id]; });
+  TWEAK_TEXT.forEach(id => { if (id in t) document.getElementById(id).value = t[id]; });
+  document.getElementById("pantry-box").style.display =
+    document.getElementById("tw-pantry").checked ? "" : "none";
+}
+
+/* ---------- markdown rendering ---------- */
+function esc(s){ return s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
+function inline(s){
+  return esc(s)
+    .replace(/\*\*(.+?)\*\*/g, "<b>$1</b>")
+    .replace(/(^|[^*])\*([^*\n]+)\*/g, "$1<i>$2</i>")
+    .replace(/`([^`]+)`/g, "<code>$1</code>");
+}
+function renderMarkdown(md){
+  const lines = md.replace(/\r\n/g, "\n").split("\n");
+  let html = "", i = 0;
+  const isTableRow = l => /^\s*\|.*\|\s*$/.test(l);
+  const isSep = l => /^\s*\|?\s*:?-{2,}.*\|/.test(l);
+  while (i < lines.length){
+    const line = lines[i];
+
+    if (/^\s*$/.test(line)) { i++; continue; }
+
+    // table
+    if (isTableRow(line) && i + 1 < lines.length && isSep(lines[i+1])){
+      const headCells = line.trim().replace(/^\||\|$/g,"").split("|").map(c => inline(c.trim()));
+      let rows = [];
+      i += 2;
+      while (i < lines.length && isTableRow(lines[i])){
+        rows.push(lines[i].trim().replace(/^\||\|$/g,"").split("|").map(c => inline(c.trim())));
+        i++;
+      }
+      html += '<div class="table-scroll"><table><thead><tr>' +
+        headCells.map(c => `<th>${c}</th>`).join("") +
+        "</tr></thead><tbody>" +
+        rows.map(r => "<tr>" + r.map(c => `<td>${c}</td>`).join("") + "</tr>").join("") +
+        "</tbody></table></div>";
+      continue;
+    }
+
+    // headings
+    const h = line.match(/^(#{1,6})\s+(.*)$/);
+    if (h){ const n = h[1].length; html += `<h${n}>${inline(h[2])}</h${n}>`; i++; continue; }
+
+    // hr
+    if (/^\s*(---+|\*\*\*+|⸻)\s*$/.test(line)){ html += "<hr>"; i++; continue; }
+
+    // blockquote
+    if (/^\s*>\s?/.test(line)){
+      let q = [];
+      while (i < lines.length && /^\s*>\s?/.test(lines[i])){ q.push(lines[i].replace(/^\s*>\s?/, "")); i++; }
+      html += "<blockquote>" + q.map(inline).join("<br>") + "</blockquote>";
+      continue;
+    }
+
+    // lists
+    if (/^\s*([-*+]|\d+[.)])\s+/.test(line)){
+      const ordered = /^\s*\d+[.)]\s+/.test(line);
+      const tag = ordered ? "ol" : "ul";
+      let items = [];
+      while (i < lines.length && /^\s*([-*+]|\d+[.)])\s+/.test(lines[i])){
+        items.push(lines[i].replace(/^\s*([-*+]|\d+[.)])\s+/, ""));
+        i++;
+      }
+      html += `<${tag}>` + items.map(it => `<li>${inline(it)}</li>`).join("") + `</${tag}>`;
+      continue;
+    }
+
+    // paragraph — merge consecutive plain lines
+    let para = [line];
+    i++;
+    while (i < lines.length && lines[i].trim() &&
+           !/^(#{1,6}\s|>|\s*([-*+]|\d+[.)])\s|\s*\|)/.test(lines[i]) &&
+           !/^\s*(---+|⸻)\s*$/.test(lines[i])){
+      para.push(lines[i]); i++;
+    }
+    html += "<p>" + para.map(inline).join("<br>") + "</p>";
+  }
+  return html;
+}
+
+/* ---------- plan display ---------- */
+function setCurrent(md, label){
+  current = { md, label: label || defaultLabel(), date: new Date().toISOString() };
+  save(LS.current, current);
+  showCurrent();
+}
+function defaultLabel(){
+  return "Week of " + new Date().toLocaleDateString("en-AU", { day: "numeric", month: "short", year: "numeric" });
+}
+function showCurrent(streaming){
+  const out = document.getElementById("plan-output");
+  const lbl = document.getElementById("plan-label");
+  if (!current || !current.md){
+    out.innerHTML = '<p class="empty">No plan yet — generate one in the Plan Builder tab.</p>';
+    lbl.style.display = "none";
+    return;
+  }
+  out.innerHTML = renderMarkdown(current.md) + (streaming ? '<span class="cursor"></span>' : "");
+  lbl.textContent = current.label;
+  lbl.style.display = "";
+}
+
+/* ---------- generate via Claude API ---------- */
+let aborter = null;
+const statusEl = document.getElementById("gen-status");
+function setStatus(msg, kind){
+  statusEl.className = "status show " + (kind || "info");
+  statusEl.textContent = msg;
+  if (!msg) statusEl.className = "status";
+}
+
+async function generate(){
+  if (!settings.apiKey){
+    setStatus("No API key saved. Add one in Settings, or use “Copy full prompt” and paste it into claude.ai.", "err");
+    return;
+  }
+  const prompt = buildPrompt();
+  const btn = document.getElementById("btn-generate");
+  const stopBtn = document.getElementById("btn-stop");
+  btn.disabled = true;
+  stopBtn.style.display = "";
+  setStatus("Generating your plan — this takes a few minutes for a full week…");
+  showTab("plan");
+
+  current = { md: "", label: defaultLabel(), date: new Date().toISOString() };
+  aborter = new AbortController();
+
+  try {
+    const res = await fetch("https://api.anthropic.com/v1/messages", {
+      method: "POST",
+      signal: aborter.signal,
+      headers: {
+        "content-type": "application/json",
+        "x-api-key": settings.apiKey,
+        "anthropic-version": "2023-06-01",
+        "anthropic-dangerous-direct-browser-access": "true",
+      },
+      body: JSON.stringify({
+        model: "claude-opus-4-8",
+        max_tokens: 64000,
+        stream: true,
+        thinking: { type: "adaptive" },
+        messages: [{ role: "user", content: prompt }],
+      }),
+    });
+
+    if (!res.ok){
+      let msg = "API error (HTTP " + res.status + ")";
+      try { const j = await res.json(); if (j?.error?.message) msg += ": " + j.error.message; } catch {}
+      throw new Error(msg);
+    }
+
+    const reader = res.body.getReader();
+    const decoder = new TextDecoder();
+    let buf = "", lastRender = 0, stopReason = null;
+
+    for (;;){
+      const { done, value } = await reader.read();
+      if (done) break;
+      buf += decoder.decode(value, { stream: true });
+      const parts = buf.split("\n");
+      buf = parts.pop();
+      for (const raw of parts){
+        const lineStr = raw.trim();
+        if (!lineStr.startsWith("data:")) continue;
+        let ev;
+        try { ev = JSON.parse(lineStr.slice(5).trim()); } catch { continue; }
+        if (ev.type === "content_block_delta" && ev.delta?.type === "text_delta"){
+          current.md += ev.delta.text;
+          const now = Date.now();
+          if (now - lastRender > 250){ showCurrent(true); lastRender = now; }
+        } else if (ev.type === "message_delta" && ev.delta?.stop_reason){
+          stopReason = ev.delta.stop_reason;
+        } else if (ev.type === "error"){
+          throw new Error(ev.error?.message || "Stream error");
+        }
+      }
+    }
+
+    save(LS.current, current);
+    showCurrent(false);
+    if (!current.md){
+      setStatus("The model returned no plan text (stop reason: " + (stopReason || "unknown") + "). Try again.", "err");
+    } else if (stopReason === "max_tokens"){
+      setStatus("Plan generated, but it was cut off at the length limit — the last section may be incomplete.", "err");
+    } else if (stopReason === "refusal"){
+      setStatus("The request was declined by the model. Try again or adjust the prompt.", "err");
+    } else {
+      setStatus("Done! Plan is ready — remember to hit “Save to Past Weeks” if you want to keep it.");
+    }
+  } catch (e){
+    if (e.name === "AbortError"){
+      save(LS.current, current);
+      showCurrent(false);
+      setStatus("Stopped. Partial plan kept.", "err");
+    } else {
+      showCurrent(false);
+      const msg = /fetch|network/i.test(e.message)
+        ? "Couldn't reach the Claude API from this page (network blocked or offline). Use “Copy full prompt”, run it in claude.ai, then paste the answer back in the Plan Builder tab."
+        : e.message;
+      setStatus(msg, "err");
+    }
+  } finally {
+    btn.disabled = false;
+    stopBtn.style.display = "none";
+    aborter = null;
+  }
+}
+
+document.getElementById("btn-generate").addEventListener("click", generate);
+document.getElementById("btn-stop").addEventListener("click", () => aborter && aborter.abort());
+
+document.getElementById("btn-copy").addEventListener("click", async () => {
+  try {
+    await navigator.clipboard.writeText(buildPrompt());
+    setStatus("Prompt copied — paste it into claude.ai (or any AI chat), then paste the answer back below.");
+  } catch {
+    setStatus("Couldn't access the clipboard — open the preview below and copy manually.", "err");
+  }
+});
+
+document.getElementById("btn-paste").addEventListener("click", () => {
+  const md = document.getElementById("paste-plan").value.trim();
+  if (!md){ setStatus("Nothing to paste — the box is empty.", "err"); return; }
+  setCurrent(md);
+  document.getElementById("paste-plan").value = "";
+  showTab("plan");
+});
+
+/* ---------- save / export ---------- */
+document.getElementById("btn-save").addEventListener("click", () => {
+  if (!current || !current.md) return;
+  const label = prompt("Name this week:", current.label) ;
+  if (label === null) return;
+  current.label = label.trim() || current.label;
+  history.unshift({ ...current, id: Date.now() });
+  save(LS.history, history);
+  save(LS.current, current);
+  renderHistory();
+  showCurrent();
+  showTab("history");
+});
+document.getElementById("btn-print").addEventListener("click", () => window.print());
+document.getElementById("btn-download").addEventListener("click", () => {
+  if (!current || !current.md) return;
+  const blob = new Blob([current.md], { type: "text/markdown" });
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = current.label.replace(/[^\w\- ]+/g, "").replace(/\s+/g, "-").toLowerCase() + ".md";
+  a.click();
+  URL.revokeObjectURL(a.href);
+});
+
+/* ---------- history ---------- */
+function renderHistory(){
+  const box = document.getElementById("hist-list");
+  if (!history.length){
+    box.innerHTML = '<p class="empty">Saved plans will appear here.</p>';
+    return;
+  }
+  box.innerHTML = "";
+  history.forEach(item => {
+    const row = document.createElement("div");
+    row.className = "hist-item";
+    const when = new Date(item.date).toLocaleDateString("en-AU", { day: "numeric", month: "short", year: "numeric" });
+    row.innerHTML = `<div><b>${esc(item.label)}</b><div class="meta">saved ${when} · ${Math.round(item.md.length / 1000)}k chars</div></div>
+      <div class="actions"><button data-act="view">View</button><button data-act="del" class="del">Delete</button></div>`;
+    row.querySelector('[data-act="view"]').addEventListener("click", () => {
+      current = { md: item.md, label: item.label, date: item.date };
+      save(LS.current, current);
+      showCurrent();
+      showTab("plan");
+    });
+    row.querySelector('[data-act="del"]').addEventListener("click", () => {
+      if (!confirm(`Delete "${item.label}"?`)) return;
+      history = history.filter(h => h.id !== item.id);
+      save(LS.history, history);
+      renderHistory();
+    });
+    box.appendChild(row);
+  });
+}
+
+/* ---------- settings ---------- */
+function loadSettingsForm(){
+  document.getElementById("set-baby").value = settings.babyDob;
+  document.getElementById("set-stores").value = settings.stores;
+  document.getElementById("set-protein-me").value = settings.proteinMe;
+  document.getElementById("set-protein-wife").value = settings.proteinWife;
+  document.getElementById("set-key").value = settings.apiKey;
+}
+document.getElementById("btn-save-settings").addEventListener("click", () => {
+  settings.babyDob     = document.getElementById("set-baby").value || defaults.babyDob;
+  settings.stores      = document.getElementById("set-stores").value.trim() || defaults.stores;
+  settings.proteinMe   = document.getElementById("set-protein-me").value.trim() || defaults.proteinMe;
+  settings.proteinWife = document.getElementById("set-protein-wife").value.trim() || defaults.proteinWife;
+  settings.apiKey      = document.getElementById("set-key").value.trim();
+  save(LS.settings, settings);
+  const st = document.getElementById("set-status");
+  st.className = "status show info";
+  st.textContent = "Saved. Baby is currently a " + babyAgeText() + " — the prompt will say so automatically.";
+  refreshPreview();
+});
+
+/* ---------- init ---------- */
+restoreTweaks();
+loadSettingsForm();
+refreshPreview();
+renderHistory();
+if (current && current.md) showCurrent();
+</script>
+</body>
+</html>
