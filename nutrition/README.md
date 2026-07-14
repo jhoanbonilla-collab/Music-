@@ -6,6 +6,24 @@ to cook.
 
 **Open [`index.html`](index.html) in any browser. No build, no server, no dependencies.**
 
+## Run it locally
+
+The simplest way — double-click `index.html` (or drag it into a browser tab). Everything works
+from a plain `file://` page, including the Claude API call.
+
+If you prefer a proper local URL:
+
+```sh
+git clone https://github.com/jhoanbonilla-collab/Music-.git
+cd Music-/nutrition
+sh serve.sh          # → http://localhost:8787
+```
+
+`serve.sh` uses Python's built-in web server (falls back to `npx serve`), binds to
+127.0.0.1 only, and needs nothing installed beyond Python or Node. Set `PORT=3000 sh serve.sh`
+to use a different port. Your settings, API key, and plan history live in that browser's
+localStorage, so stick to one browser/URL for continuity.
+
 ## What it does
 
 1. **Plan Builder** — assembles the full Registered-Dietitian prompt (protein targets,

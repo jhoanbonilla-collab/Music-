@@ -7,13 +7,37 @@
 <style>
   :root{
     --bg:#faf7f2; --card:#ffffff; --ink:#2d2a26; --ink-soft:#6b645b;
-    --accent:#3e7d5a; --accent-dark:#2e5f44; --accent-soft:#e7f1eb;
-    --gold:#c98a3d; --line:#e8e1d6; --danger:#b5443c;
+    --accent:#3e7d5a; --accent-strong:#2e5f44; --header-bg:#2e5f44; --accent-soft:#e7f1eb;
+    --gold:#c98a3d; --line:#e8e1d6; --danger:#b5443c; --danger-soft:#f7e4e2;
+    --field:#fffdf9; --zebra:#faf6ef; --code-bg:#f4efe6; --head-ink:#fdfaf4;
     --radius:14px; --shadow:0 2px 12px rgba(60,50,30,.07);
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#1c1a16; --card:#262319; --ink:#eae4d8; --ink-soft:#a89e8e;
+      --accent:#4f9a72; --accent-strong:#8fcbaa; --header-bg:#274b3a; --accent-soft:#2b3a31;
+      --gold:#d9a35c; --line:#3b362c; --danger:#e08078; --danger-soft:#462b27;
+      --field:#2d2920; --zebra:#2b2820; --code-bg:#332f25; --head-ink:#f2ecdf;
+      --shadow:0 2px 12px rgba(0,0,0,.35);
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#1c1a16; --card:#262319; --ink:#eae4d8; --ink-soft:#a89e8e;
+    --accent:#4f9a72; --accent-strong:#8fcbaa; --header-bg:#274b3a; --accent-soft:#2b3a31;
+    --gold:#d9a35c; --line:#3b362c; --danger:#e08078; --danger-soft:#462b27;
+    --field:#2d2920; --zebra:#2b2820; --code-bg:#332f25; --head-ink:#f2ecdf;
+    --shadow:0 2px 12px rgba(0,0,0,.35);
+  }
+  :root[data-theme="light"]{
+    --bg:#faf7f2; --card:#ffffff; --ink:#2d2a26; --ink-soft:#6b645b;
+    --accent:#3e7d5a; --accent-strong:#2e5f44; --header-bg:#2e5f44; --accent-soft:#e7f1eb;
+    --gold:#c98a3d; --line:#e8e1d6; --danger:#b5443c; --danger-soft:#f7e4e2;
+    --field:#fffdf9; --zebra:#faf6ef; --code-bg:#f4efe6; --head-ink:#fdfaf4;
+    --shadow:0 2px 12px rgba(60,50,30,.07);
   }
   *{box-sizing:border-box;margin:0;padding:0}
   body{font-family:Georgia,"Times New Roman",serif;background:var(--bg);color:var(--ink);line-height:1.55}
-  header{background:var(--accent-dark);color:#fdfaf4;padding:26px 20px 22px;text-align:center}
+  header{background:var(--header-bg);color:var(--head-ink);padding:26px 20px 22px;text-align:center}
   header h1{font-size:1.7rem;letter-spacing:.5px;font-weight:normal}
   header h1 b{color:#f3d9ae}
   header p{font-size:.95rem;opacity:.85;margin-top:5px;font-style:italic}
@@ -25,19 +49,19 @@
   }
   nav.tabs button.active{background:var(--accent);border-color:var(--accent);color:#fff}
   .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:20px;margin-bottom:18px}
-  .card h2{font-size:1.15rem;margin-bottom:12px;color:var(--accent-dark)}
+  .card h2{font-size:1.15rem;margin-bottom:12px;color:var(--accent-strong)}
   .card h2 small{font-weight:normal;color:var(--ink-soft);font-size:.8rem;margin-left:6px}
   label.field{display:block;font-size:.85rem;color:var(--ink-soft);margin:12px 0 4px}
   input[type=text],input[type=password],input[type=date],textarea,select{
     width:100%;font:inherit;font-size:.95rem;padding:9px 11px;border:1px solid var(--line);
-    border-radius:8px;background:#fffdf9;color:var(--ink)
+    border-radius:8px;background:var(--field);color:var(--ink)
   }
   textarea{min-height:74px;resize:vertical}
   .grid2{display:grid;grid-template-columns:1fr 1fr;gap:0 18px}
   @media(max-width:640px){.grid2{grid-template-columns:1fr}}
   .checks{display:grid;grid-template-columns:1fr 1fr;gap:8px 14px;margin-top:6px}
   @media(max-width:640px){.checks{grid-template-columns:1fr}}
-  .checks label{display:flex;gap:9px;align-items:flex-start;font-size:.92rem;cursor:pointer;padding:9px 11px;border:1px solid var(--line);border-radius:9px;background:#fffdf9}
+  .checks label{display:flex;gap:9px;align-items:flex-start;font-size:.92rem;cursor:pointer;padding:9px 11px;border:1px solid var(--line);border-radius:9px;background:var(--field)}
   .checks label:has(input:checked){background:var(--accent-soft);border-color:var(--accent)}
   .checks input{margin-top:3px;accent-color:var(--accent)}
   .btnrow{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
@@ -45,25 +69,25 @@
     font:inherit;font-size:.98rem;padding:11px 20px;border-radius:9px;border:1px solid var(--accent);
     background:var(--accent);color:#fff;cursor:pointer
   }
-  button.btn:hover{background:var(--accent-dark)}
-  button.btn.secondary{background:transparent;color:var(--accent-dark)}
+  button.btn:hover{background:var(--header-bg)}
+  button.btn.secondary{background:transparent;color:var(--accent-strong)}
   button.btn.ghost{background:transparent;color:var(--ink-soft);border-color:var(--line)}
   button.btn:disabled{opacity:.5;cursor:not-allowed}
   .hint{font-size:.8rem;color:var(--ink-soft);margin-top:8px;font-style:italic}
   .status{font-size:.9rem;margin-top:12px;padding:10px 13px;border-radius:9px;display:none}
   .status.show{display:block}
-  .status.info{background:var(--accent-soft);color:var(--accent-dark)}
-  .status.err{background:#f7e4e2;color:var(--danger)}
+  .status.info{background:var(--accent-soft);color:var(--accent-strong)}
+  .status.err{background:var(--danger-soft);color:var(--danger)}
   details.prompt-preview{margin-top:14px}
-  details.prompt-preview summary{cursor:pointer;font-size:.88rem;color:var(--accent-dark)}
+  details.prompt-preview summary{cursor:pointer;font-size:.88rem;color:var(--accent-strong)}
   details.prompt-preview pre{
     white-space:pre-wrap;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.76rem;
-    background:#f4efe6;border:1px solid var(--line);border-radius:9px;padding:14px;margin-top:8px;max-height:340px;overflow:auto
+    background:var(--code-bg);border:1px solid var(--line);border-radius:9px;padding:14px;margin-top:8px;max-height:340px;overflow:auto
   }
   /* rendered plan */
   .plan{font-size:.95rem}
-  .plan h1{font-size:1.5rem;margin:22px 0 10px;color:var(--accent-dark)}
-  .plan h2{font-size:1.25rem;margin:22px 0 8px;color:var(--accent-dark);border-bottom:2px solid var(--accent-soft);padding-bottom:4px}
+  .plan h1{font-size:1.5rem;margin:22px 0 10px;color:var(--accent-strong)}
+  .plan h2{font-size:1.25rem;margin:22px 0 8px;color:var(--accent-strong);border-bottom:2px solid var(--accent-soft);padding-bottom:4px}
   .plan h3{font-size:1.08rem;margin:18px 0 6px;color:var(--ink)}
   .plan h4{font-size:.98rem;margin:14px 0 5px}
   .plan p{margin:8px 0}
@@ -71,12 +95,12 @@
   .plan li{margin:3px 0}
   .plan hr{border:none;border-top:1px solid var(--line);margin:18px 0}
   .plan blockquote{border-left:3px solid var(--gold);padding-left:12px;color:var(--ink-soft);margin:10px 0}
-  .plan code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.85em;background:#f4efe6;padding:1px 5px;border-radius:4px}
+  .plan code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.85em;background:var(--code-bg);padding:1px 5px;border-radius:4px}
   .table-scroll{overflow-x:auto;margin:10px 0}
   .plan table{border-collapse:collapse;width:100%;font-size:.86rem}
-  .plan th{background:var(--accent-dark);color:#fdfaf4;text-align:left;padding:7px 10px;white-space:nowrap}
+  .plan th{background:var(--header-bg);color:var(--head-ink);text-align:left;padding:7px 10px;white-space:nowrap}
   .plan td{border-bottom:1px solid var(--line);padding:7px 10px;vertical-align:top}
-  .plan tr:nth-child(even) td{background:#faf6ef}
+  .plan tr:nth-child(even) td{background:var(--zebra)}
   .cursor{display:inline-block;width:8px;height:1.05em;background:var(--accent);vertical-align:text-bottom;animation:blink .8s steps(1) infinite}
   @keyframes blink{50%{opacity:0}}
   /* history */
@@ -84,10 +108,10 @@
   .hist-item:last-child{border-bottom:none}
   .hist-item .meta{font-size:.85rem;color:var(--ink-soft)}
   .hist-item .actions{display:flex;gap:8px;flex-shrink:0}
-  .hist-item button{font:inherit;font-size:.82rem;padding:6px 12px;border-radius:7px;border:1px solid var(--line);background:#fffdf9;cursor:pointer;color:var(--ink)}
+  .hist-item button{font:inherit;font-size:.82rem;padding:6px 12px;border-radius:7px;border:1px solid var(--line);background:var(--field);cursor:pointer;color:var(--ink)}
   .hist-item button.del{color:var(--danger)}
   .empty{color:var(--ink-soft);font-style:italic;font-size:.92rem;padding:8px 0}
-  .pill{display:inline-block;font-size:.72rem;background:var(--accent-soft);color:var(--accent-dark);border-radius:999px;padding:2px 10px;margin-left:8px;vertical-align:middle}
+  .pill{display:inline-block;font-size:.72rem;background:var(--accent-soft);color:var(--accent-strong);border-radius:999px;padding:2px 10px;margin-left:8px;vertical-align:middle}
   @media print{
     header,nav.tabs,.no-print{display:none !important}
     body{background:#fff}
@@ -646,7 +670,10 @@ async function generate(){
       setStatus("Stopped. Partial plan kept.", "err");
     } else {
       showCurrent(false);
-      setStatus(e.message, "err");
+      const msg = /fetch|network/i.test(e.message)
+        ? "Couldn't reach the Claude API from this page (network blocked or offline). Use “Copy full prompt”, run it in claude.ai, then paste the answer back in the Plan Builder tab."
+        : e.message;
+      setStatus(msg, "err");
     }
   } finally {
     btn.disabled = false;
